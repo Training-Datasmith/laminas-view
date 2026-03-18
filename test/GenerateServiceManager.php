@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace LaminasTest\View;
 
-use Laminas\ServiceManager\ServiceManager;
-use Laminas\View\ConfigProvider;
-
 use function array_replace_recursive;
 use function assert;
+
 use function is_array;
+
+use Laminas\ServiceManager\ServiceManager;
+use Laminas\View\ConfigProvider;
 
 /**
  * Test Utility to fetch a configured service manager with specific configuration overrides.

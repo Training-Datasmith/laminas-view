@@ -4,16 +4,18 @@ declare(strict_types=1);
 
 namespace Laminas\View\Model;
 
-use ArrayIterator;
-use Laminas\View\Exception\InvalidArgumentException;
-use Traversable;
-
 use function array_key_exists;
 use function array_map;
 use function array_merge;
+
+use ArrayIterator;
+
 use function count;
 use function is_array;
 use function iterator_to_array;
+
+use Laminas\View\Exception\InvalidArgumentException;
+use Traversable;
 
 /**
  * @psalm-no-seal-properties This object is a mixed property bag

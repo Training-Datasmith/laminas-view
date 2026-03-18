@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Laminas\View\Helper;
 
-use Stringable;
-
 use function count;
+
+use Stringable;
 
 /**
  * Helper for alternating between a set of values

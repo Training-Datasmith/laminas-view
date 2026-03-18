@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace LaminasTest\View\Helper;
 
+use function array_walk_recursive;
+
 use Laminas\Escaper\Escaper;
 use Laminas\View\Exception;
 use Laminas\View\Helper\HtmlList;
-use PHPUnit\Framework\TestCase;
-
-use function array_walk_recursive;
 
 use const PHP_EOL;
+
+use PHPUnit\Framework\TestCase;
 
 final class HtmlListTest extends TestCase
 {

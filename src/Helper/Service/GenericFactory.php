@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Laminas\View\Helper\Service;
 
+use function implode;
+
 use Laminas\Escaper\Escaper;
 use Laminas\Escaper\EscaperInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;
@@ -17,9 +19,9 @@ use Laminas\View\Helper\HtmlObject;
 use Laminas\View\Helper\HtmlTag;
 use Laminas\View\Helper\InlineScript;
 use Laminas\View\HelperPluginManager;
+
 use Psr\Container\ContainerInterface;
 
-use function implode;
 use function sprintf;
 
 /**

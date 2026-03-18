@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace LaminasTest\View\Resolver;
 
+use function array_reverse;
+
 use Laminas\View\Exception\DomainException;
 use Laminas\View\Resolver\TemplatePathStack;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use stdClass;
-use TypeError;
 
-use function array_reverse;
+use TypeError;
 
 /**
  * @psalm-import-type Options from TemplatePathStack

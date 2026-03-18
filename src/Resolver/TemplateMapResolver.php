@@ -4,18 +4,23 @@ declare(strict_types=1);
 
 namespace Laminas\View\Resolver;
 
-use ArrayIterator;
-use IteratorAggregate;
-use Laminas\View\Exception\InvalidArgumentException;
-use Traversable;
-
 use function array_key_exists;
 use function array_replace_recursive;
+
+use ArrayIterator;
+
 use function is_array;
+
 use function is_iterable;
 use function is_string;
 use function iterator_to_array;
+
+use IteratorAggregate;
+use Laminas\View\Exception\InvalidArgumentException;
+
 use function sprintf;
+
+use Traversable;
 
 /** @implements IteratorAggregate<non-empty-string, non-empty-string> */
 final class TemplateMapResolver implements IteratorAggregate, ResolverInterface

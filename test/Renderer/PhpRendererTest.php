@@ -17,15 +17,19 @@ use LaminasTest\View\GenerateServiceManager;
 use LaminasTest\View\TestAsset\Invokable;
 use LaminasTest\View\TestAsset\SharedInstance;
 use LaminasTest\View\TestAsset\Uninvokable;
-use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\TestCase;
-use RuntimeException;
-use Throwable;
-
-use function restore_error_handler;
-use function sprintf;
 
 use const PHP_EOL;
+
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\TestCase;
+
+use function restore_error_handler;
+
+use RuntimeException;
+
+use function sprintf;
+
+use Throwable;
 
 final class PhpRendererTest extends TestCase
 {
@@ -263,7 +267,7 @@ final class PhpRendererTest extends TestCase
 
         // @codingStandardsIgnoreStart
         /** @psalm-suppress UnusedClosureParam */
-        set_error_handler(static fn(int $errno, string $errstr): bool => true, E_WARNING);
+        set_error_handler(static fn (int $errno, string $errstr): bool => true, E_WARNING);
         // @codingStandardsIgnoreEnd
 
         try {
@@ -364,7 +368,7 @@ final class PhpRendererTest extends TestCase
 
     public function testThatInvokableObjectsAreNotInvokedOnAccess(): void
     {
-        $invokable = new class {
+        $invokable = new class () {
             public function __invoke(): string
             {
                 return 'INVOKE';

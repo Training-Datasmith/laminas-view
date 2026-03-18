@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace LaminasTest\View\Helper\Service;
 
 use ArrayObject;
+
+use function is_array;
+
 use Laminas\View\Helper\Service\HeadTitleFactory;
 use LaminasTest\View\TestAsset\InMemoryContainer;
 use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\TestCase;
 
-use function is_array;
+use PHPUnit\Framework\TestCase;
 
 final class HeadTitleFactoryTest extends TestCase
 {

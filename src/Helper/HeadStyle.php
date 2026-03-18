@@ -4,22 +4,25 @@ declare(strict_types=1);
 
 namespace Laminas\View\Helper;
 
-use Laminas\Escaper\EscaperInterface;
-use Laminas\View\Exception\RuntimeException;
-use Laminas\View\Helper\Placeholder\Container;
-use Laminas\View\Helper\Placeholder\Position;
-use Laminas\View\HTML\Tag;
-use Laminas\View\HtmlAttributesSet;
-use Stringable;
-
 use function assert;
 use function implode;
 use function is_int;
 use function is_string;
+
+use Laminas\Escaper\EscaperInterface;
+use Laminas\View\Exception\RuntimeException;
+use Laminas\View\Helper\Placeholder\Container;
+
+use Laminas\View\Helper\Placeholder\Position;
+use Laminas\View\HTML\Tag;
+use Laminas\View\HtmlAttributesSet;
+
+use const PHP_EOL;
+
 use function preg_replace;
 use function str_repeat;
 
-use const PHP_EOL;
+use Stringable;
 
 /**
  * Helper for adding inline CSS to the head in style tags

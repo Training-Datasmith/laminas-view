@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace LaminasTest\View\Helper\TestAsset;
 
+use function current;
+
 use Iterator;
 
-use function current;
 use function key;
 use function next;
 use function reset;

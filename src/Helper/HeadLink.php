@@ -4,17 +4,20 @@ declare(strict_types=1);
 
 namespace Laminas\View\Helper;
 
-use Laminas\Escaper\EscaperInterface;
-use Laminas\View\HTML\Tag;
-use Laminas\View\HtmlAttributesSet;
-use Stringable;
-
 use function array_map;
 use function array_values;
 use function implode;
-use function sprintf;
+
+use Laminas\Escaper\EscaperInterface;
+
+use Laminas\View\HTML\Tag;
+use Laminas\View\HtmlAttributesSet;
 
 use const PHP_EOL;
+
+use function sprintf;
+
+use Stringable;
 
 final class HeadLink implements StatefulHelperInterface, Stringable
 {

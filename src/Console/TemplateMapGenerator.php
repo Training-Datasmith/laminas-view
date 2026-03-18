@@ -4,15 +4,13 @@ declare(strict_types=1);
 
 namespace Laminas\View\Console;
 
-use Laminas\View\Exception\InvalidArgumentException;
-use RecursiveDirectoryIterator;
-use RecursiveIteratorIterator;
-use SplFileInfo;
-
 use function array_pop;
 use function array_slice;
 use function assert;
 use function basename;
+
+use const DIRECTORY_SEPARATOR;
+
 use function dirname;
 use function explode;
 use function implode;
@@ -20,20 +18,31 @@ use function is_dir;
 use function is_readable;
 use function is_string;
 use function is_writable;
+
+use Laminas\View\Exception\InvalidArgumentException;
+
 use function ltrim;
+
+use const PHP_EOL;
+
 use function realpath;
+
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
+
 use function sort;
+
+use SplFileInfo;
+
 use function sprintf;
 use function str_ends_with;
 use function str_repeat;
 use function str_replace;
 use function str_starts_with;
 use function strlen;
+
 use function strtolower;
 use function substr;
-
-use const DIRECTORY_SEPARATOR;
-use const PHP_EOL;
 
 /**
  * @internal

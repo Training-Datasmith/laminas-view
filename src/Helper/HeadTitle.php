@@ -4,18 +4,22 @@ declare(strict_types=1);
 
 namespace Laminas\View\Helper;
 
+use function array_map;
+use function array_unshift;
+
 use Closure;
+
+use function implode;
+use function is_int;
+
 use Laminas\Escaper\Escaper;
 use Laminas\Escaper\EscaperInterface;
 use Laminas\Translator\TranslatorInterface;
-use Stringable;
 
-use function array_map;
-use function array_unshift;
-use function implode;
-use function is_int;
 use function sprintf;
 use function str_repeat;
+
+use Stringable;
 
 /**
  * Helper for setting and retrieving title element for HTML head.

@@ -4,24 +4,28 @@ declare(strict_types=1);
 
 namespace Laminas\View\Helper;
 
-use Laminas\Escaper\EscaperInterface;
-use Laminas\View\Exception\RuntimeException;
-use Laminas\View\Helper\Placeholder\Container;
-use Laminas\View\Helper\Placeholder\Position;
-use Laminas\View\HTML\Tag;
-use Laminas\View\HtmlAttributesSet;
-use Stringable;
-
 use function assert;
 use function implode;
 use function is_int;
 use function is_string;
+
+use Laminas\Escaper\EscaperInterface;
+use Laminas\View\Exception\RuntimeException;
+use Laminas\View\Helper\Placeholder\Container;
+
+use Laminas\View\Helper\Placeholder\Position;
+use Laminas\View\HTML\Tag;
+use Laminas\View\HtmlAttributesSet;
+
+use const PHP_EOL;
+
 use function preg_replace;
 use function sprintf;
 use function str_repeat;
-use function trim;
 
-use const PHP_EOL;
+use Stringable;
+
+use function trim;
 
 /**
  * This class is not designed for user inheritance and should be considered internal.

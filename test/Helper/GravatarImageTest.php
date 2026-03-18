@@ -6,10 +6,13 @@ namespace LaminasTest\View\Helper;
 
 use Laminas\Escaper\Escaper;
 use Laminas\View\Helper\GravatarImage;
-use PHPUnit\Framework\Attributes\Depends;
-use PHPUnit\Framework\TestCase;
 
 use function md5;
+
+use PHPUnit\Framework\Attributes\Depends;
+
+use PHPUnit\Framework\TestCase;
+
 use function sprintf;
 
 final class GravatarImageTest extends TestCase

@@ -4,23 +4,28 @@ declare(strict_types=1);
 
 namespace Laminas\View\Renderer;
 
-use ArrayIterator;
-use IteratorAggregate;
-use Laminas\ServiceManager\Exception\ServiceNotFoundException;
-use Laminas\View\Exception\RenderingFailedException;
-use Laminas\View\Helper\HelperInterface;
-use Laminas\View\HelperPluginManagerInterface;
-use Throwable;
-use Traversable;
-
 use function array_key_exists;
+
+use ArrayIterator;
+
 use function assert;
 use function extract;
 use function is_callable;
 use function is_string;
+
+use IteratorAggregate;
+use Laminas\ServiceManager\Exception\ServiceNotFoundException;
+
+use Laminas\View\Exception\RenderingFailedException;
+use Laminas\View\Helper\HelperInterface;
+use Laminas\View\HelperPluginManagerInterface;
+
 use function ob_end_clean;
 use function ob_get_clean;
 use function ob_start;
+
+use Throwable;
+use Traversable;
 
 /**
  * phpcs:disable WebimpressCodingStandard.NamingConventions.ValidVariableName

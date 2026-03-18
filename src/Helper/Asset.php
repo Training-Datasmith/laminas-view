@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Laminas\View\Helper;
 
+use function array_key_exists;
+
 use Laminas\View\Exception;
 
-use function array_key_exists;
 use function sprintf;
 
 /**

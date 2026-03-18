@@ -5,14 +5,17 @@ declare(strict_types=1);
 namespace LaminasTest\View;
 
 use Closure;
-use PHPUnit\Framework\TestCase;
-use stdClass;
-
-use function restore_error_handler;
-use function set_error_handler;
 
 use const E_ALL;
 use const E_USER_DEPRECATED;
+
+use PHPUnit\Framework\TestCase;
+
+use function restore_error_handler;
+
+use function set_error_handler;
+
+use stdClass;
 
 final class TestHelpers
 {

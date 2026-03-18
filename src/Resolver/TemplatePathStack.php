@@ -4,23 +4,30 @@ declare(strict_types=1);
 
 namespace Laminas\View\Resolver;
 
+use function assert;
+use function count;
+
+use const DIRECTORY_SEPARATOR;
+
+use function file_exists;
+
+use function is_array;
+
 use Laminas\Stdlib\SplStack;
 use Laminas\View\Exception;
 use Laminas\View\Exception\DomainException;
-use SplFileInfo;
 
-use function assert;
-use function count;
-use function file_exists;
-use function is_array;
 use function ltrim;
 use function pathinfo;
+
+use const PATHINFO_EXTENSION;
+
 use function preg_match;
 use function rtrim;
-use function str_starts_with;
 
-use const DIRECTORY_SEPARATOR;
-use const PATHINFO_EXTENSION;
+use SplFileInfo;
+
+use function str_starts_with;
 
 /**
  * Resolves view scripts based on a stack of paths

@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace LaminasTest\View\Helper\Placeholder;
 
+use function iterator_to_array;
+
 use Laminas\View\Exception\RuntimeException;
 use Laminas\View\Helper\Placeholder\Container;
-use PHPUnit\Framework\TestCase;
 
-use function iterator_to_array;
 use function ob_end_clean;
+
+use PHPUnit\Framework\TestCase;
 
 final class ContainerTest extends TestCase
 {

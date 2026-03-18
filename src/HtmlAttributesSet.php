@@ -4,17 +4,16 @@ declare(strict_types=1);
 
 namespace Laminas\View;
 
-use ArrayObject;
-use Laminas\Escaper\EscaperInterface;
-use Laminas\View\Exception\InvalidArgumentException;
-use Stringable;
-use Traversable;
-
 use function array_change_key_case;
 use function array_key_exists;
 use function array_keys;
 use function array_map;
 use function array_merge;
+
+use ArrayObject;
+
+use const CASE_LOWER;
+
 use function get_debug_type;
 use function implode;
 use function in_array;
@@ -23,16 +22,23 @@ use function is_bool;
 use function is_scalar;
 use function iterator_to_array;
 use function json_encode;
-use function sprintf;
-use function str_contains;
-use function str_starts_with;
 
-use const CASE_LOWER;
 use const JSON_HEX_AMP;
 use const JSON_HEX_APOS;
 use const JSON_HEX_QUOT;
 use const JSON_HEX_TAG;
 use const JSON_THROW_ON_ERROR;
+
+use Laminas\Escaper\EscaperInterface;
+
+use Laminas\View\Exception\InvalidArgumentException;
+
+use function sprintf;
+use function str_contains;
+use function str_starts_with;
+
+use Stringable;
+use Traversable;
 
 /**
  * Class for storing and processing HTML tag attributes.

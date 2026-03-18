@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace Laminas\View\Factory;
 
-use Laminas\View\ConfigProvider;
-use Psr\Container\ContainerInterface;
-
 use function is_bool;
 use function is_iterable;
+
 use function is_string;
 use function iterator_to_array;
+
+use Laminas\View\ConfigProvider;
+use Psr\Container\ContainerInterface;
 
 /**
  * Provides consistent retrieval of configuration and individual values based on historic conventions

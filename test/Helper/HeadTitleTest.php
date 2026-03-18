@@ -128,8 +128,7 @@ final class HeadTitleTest extends TestCase
 
     private function getTranslator(): TranslatorInterface
     {
-        return new class implements TranslatorInterface
-        {
+        return new class () implements TranslatorInterface {
             /** @inheritDoc */
             public function translate($message, $textDomain = 'default', $locale = null)
             {

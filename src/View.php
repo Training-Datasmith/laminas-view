@@ -5,13 +5,15 @@ declare(strict_types=1);
 namespace Laminas\View;
 
 use Closure;
+
+use function is_string;
+
 use Laminas\View\Exception\RenderingFailedException;
 use Laminas\View\Helper\ViewModel as ViewModelHelper;
 use Laminas\View\Model\ModelInterface;
 use Laminas\View\Model\ViewModel;
-use Laminas\View\Renderer\RendererInterface;
 
-use function is_string;
+use Laminas\View\Renderer\RendererInterface;
 
 final class View implements ViewInterface
 {

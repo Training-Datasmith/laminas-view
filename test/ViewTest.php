@@ -4,14 +4,16 @@ declare(strict_types=1);
 
 namespace LaminasTest\View;
 
+use function array_merge_recursive;
+
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\View\ConfigProvider;
 use Laminas\View\Model\ModelInterface;
 use Laminas\View\Model\ViewModel;
 use Laminas\View\View;
+
 use PHPUnit\Framework\TestCase;
 
-use function array_merge_recursive;
 use function preg_replace;
 use function trim;
 

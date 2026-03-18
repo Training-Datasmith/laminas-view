@@ -6,10 +6,12 @@ namespace Laminas\View\HTML;
 
 use function array_change_key_case;
 use function array_key_exists;
-use function ksort;
-use function strtolower;
 
 use const CASE_LOWER;
+
+use function ksort;
+
+use function strtolower;
 
 /**
  * This class is not part of the public API and has no BC guarantees

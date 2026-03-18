@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace LaminasTest\View\Resolver;
 
+use function iterator_to_array;
+
 use Laminas\View\Resolver\AggregateResolver;
 use Laminas\View\Resolver\TemplateMapResolver;
-use PHPUnit\Framework\TestCase;
 
-use function iterator_to_array;
+use PHPUnit\Framework\TestCase;
 
 final class AggregateResolverTest extends TestCase
 {

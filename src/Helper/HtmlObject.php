@@ -4,17 +4,19 @@ declare(strict_types=1);
 
 namespace Laminas\View\Helper;
 
-use Laminas\Escaper\EscaperInterface;
-use Laminas\View\HtmlAttributesSet;
-
 use function array_keys;
 use function array_map;
+
 use function array_merge;
 use function array_values;
 use function implode;
-use function sprintf;
+
+use Laminas\Escaper\EscaperInterface;
+use Laminas\View\HtmlAttributesSet;
 
 use const PHP_EOL;
+
+use function sprintf;
 
 final readonly class HtmlObject
 {
@@ -42,7 +44,7 @@ final readonly class HtmlObject
     ): string {
         $attributes = array_merge(['data' => $data, 'type' => $type], $attributes);
         $parameters = implode(PHP_EOL, array_map(
-            fn(string $name, int|float|bool|string $value): string => sprintf(
+            fn (string $name, int|float|bool|string $value): string => sprintf(
                 '    <param name="%s" value="%s"%s>',
                 $this->escaper->escapeHtmlAttr($name),
                 $this->escaper->escapeHtmlAttr((string) $value),

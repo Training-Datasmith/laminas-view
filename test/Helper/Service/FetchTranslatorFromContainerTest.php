@@ -9,16 +9,16 @@ use Laminas\View\Helper\Service\FetchTranslatorFromContainer;
 use LaminasTest\View\TestAsset\InMemoryContainer;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use stdClass;
 
 use function sprintf;
+
+use stdClass;
 
 final class FetchTranslatorFromContainerTest extends TestCase
 {
     private static function makeTranslator(): TranslatorInterface
     {
-        return new class implements TranslatorInterface
-        {
+        return new class () implements TranslatorInterface {
             public function translate($message, $textDomain = 'default', $locale = null) // phpcs:ignore
             {
                 return $message;

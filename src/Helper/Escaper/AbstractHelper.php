@@ -4,16 +4,19 @@ declare(strict_types=1);
 
 namespace Laminas\View\Helper\Escaper;
 
+use const E_USER_DEPRECATED;
+
+use function is_array;
+
+use function is_object;
+use function is_string;
+
 use Laminas\Escaper\EscaperInterface;
 use Laminas\View\Exception;
 
-use function is_array;
-use function is_object;
-use function is_string;
 use function method_exists;
-use function trigger_error;
 
-use const E_USER_DEPRECATED;
+use function trigger_error;
 
 /**
  * @internal

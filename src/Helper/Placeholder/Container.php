@@ -4,19 +4,25 @@ declare(strict_types=1);
 
 namespace Laminas\View\Helper\Placeholder;
 
+use function array_unshift;
+use function array_values;
+
 use ArrayIterator;
+
+use function assert;
+
 use Closure;
+
+use function count;
+
 use Countable;
 use IteratorAggregate;
 use Laminas\View\Exception\RuntimeException;
-use Traversable;
 
-use function array_unshift;
-use function array_values;
-use function assert;
-use function count;
 use function ob_get_clean;
 use function ob_start;
+
+use Traversable;
 
 /**
  * Container for placeholder values

@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace Laminas\View\Exception;
 
 use Laminas\ServiceManager\Exception\ServiceNotFoundException;
-use Throwable;
 
 use function sprintf;
+
+use Throwable;
 
 final class RenderingFailedException extends RuntimeException
 {

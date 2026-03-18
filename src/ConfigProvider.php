@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace Laminas\View;
 
+use function class_exists;
+
 use Laminas\Escaper\Escaper;
 use Laminas\Escaper\EscaperInterface;
 use Laminas\ServiceManager\Factory\InvokableFactory;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\View\Helper\Doctype;
-use Symfony\Component\Console\Command\Command;
 
-use function class_exists;
+use Symfony\Component\Console\Command\Command;
 
 /**
  * @psalm-import-type DoctypeID from Doctype

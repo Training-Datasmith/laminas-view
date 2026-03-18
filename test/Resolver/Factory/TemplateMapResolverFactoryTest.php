@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace LaminasTest\View\Resolver\Factory;
 
+use function is_string;
+
 use Laminas\View\Resolver\Factory\TemplateMapResolverFactory;
 use LaminasTest\View\TestAsset\InMemoryContainer;
 use PHPUnit\Framework\Attributes\DataProvider;
-use PHPUnit\Framework\TestCase;
 
-use function is_string;
+use PHPUnit\Framework\TestCase;
 
 final class TemplateMapResolverFactoryTest extends TestCase
 {

@@ -4,18 +4,21 @@ declare(strict_types=1);
 
 namespace Laminas\View\Helper;
 
-use Laminas\View\Exception\RuntimeException;
-use Laminas\View\Model\ModelInterface;
-use Laminas\View\Renderer\PhpRenderer;
-use Traversable;
+use const E_USER_DEPRECATED;
 
 use function get_object_vars;
 use function is_array;
 use function iterator_to_array;
-use function method_exists;
-use function trigger_error;
 
-use const E_USER_DEPRECATED;
+use Laminas\View\Exception\RuntimeException;
+use Laminas\View\Model\ModelInterface;
+use Laminas\View\Renderer\PhpRenderer;
+
+use function method_exists;
+
+use Traversable;
+
+use function trigger_error;
 
 /**
  * Helper for rendering a template fragment in its own variable scope.

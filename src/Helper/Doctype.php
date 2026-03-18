@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace Laminas\View\Helper;
 
+use function array_key_exists;
+
 use Laminas\View\Exception\InvalidArgumentException;
+
+use function sprintf;
+
 use Stringable;
 
-use function array_key_exists;
-use function sprintf;
 use function stripos;
 use function stristr;
 

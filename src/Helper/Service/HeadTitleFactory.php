@@ -4,15 +4,16 @@ declare(strict_types=1);
 
 namespace Laminas\View\Helper\Service;
 
-use Laminas\Escaper\Escaper;
-use Laminas\Escaper\EscaperInterface;
-use Laminas\View\Factory\Configuration;
-use Laminas\View\Helper\HeadTitle;
-use Psr\Container\ContainerInterface;
-
 use function is_array;
 use function is_bool;
 use function is_string;
+
+use Laminas\Escaper\Escaper;
+use Laminas\Escaper\EscaperInterface;
+
+use Laminas\View\Factory\Configuration;
+use Laminas\View\Helper\HeadTitle;
+use Psr\Container\ContainerInterface;
 
 /**
  * @internal

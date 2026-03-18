@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace LaminasTest\View;
 
 use Generator;
+
+use function is_callable;
+
 use Laminas\ServiceManager\Exception\InvalidServiceException;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\View\ConfigProvider;
@@ -14,9 +17,8 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use ReflectionClassConstant;
 use stdClass;
-use Throwable;
 
-use function is_callable;
+use Throwable;
 
 final class HelperPluginManagerCompatibilityTest extends TestCase
 {

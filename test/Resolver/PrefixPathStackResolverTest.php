@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace LaminasTest\View\Resolver;
 
+use function assert;
+
 use Laminas\View\Resolver\PrefixPathStackResolver;
 use Laminas\View\Resolver\TemplateMapResolver;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
+
 use PHPUnit\Framework\TestCase;
 
-use function assert;
 use function realpath;
 
 #[CoversClass(PrefixPathStackResolver::class)]

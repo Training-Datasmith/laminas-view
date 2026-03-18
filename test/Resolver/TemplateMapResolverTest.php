@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace LaminasTest\View\Resolver;
 
+use function array_merge;
+
 use ArrayObject;
 use Laminas\View\Exception\InvalidArgumentException;
 use Laminas\View\Resolver\TemplateCannotBeFound;
 use Laminas\View\Resolver\TemplateMapResolver;
-use PHPUnit\Framework\TestCase;
 
-use function array_merge;
+use PHPUnit\Framework\TestCase;
 
 final class TemplateMapResolverTest extends TestCase
 {

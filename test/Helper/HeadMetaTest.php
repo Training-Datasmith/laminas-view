@@ -7,11 +7,12 @@ namespace LaminasTest\View\Helper;
 use Laminas\Escaper\Escaper;
 use Laminas\View\Helper\Doctype;
 use Laminas\View\Helper\HeadMeta;
+
+use const PHP_EOL;
+
 use PHPUnit\Framework\TestCase;
 
 use function substr_count;
-
-use const PHP_EOL;
 
 /** @psalm-import-type DoctypeID from Doctype */
 final class HeadMetaTest extends TestCase

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace LaminasTest\View\Renderer;
 
+use function is_array;
+
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\View\Exception\RenderingFailedException;
 use Laminas\View\HelperPluginManager;
@@ -13,9 +15,8 @@ use Laminas\View\Resolver\ResolverInterface;
 use Laminas\View\Resolver\TemplatePathStack;
 use LaminasTest\View\TestAsset\InMemoryContainer;
 use PHPUnit\Framework\TestCase;
-use Psr\Container\ContainerInterface;
 
-use function is_array;
+use Psr\Container\ContainerInterface;
 
 final class PhpRendererFactoryTest extends TestCase
 {

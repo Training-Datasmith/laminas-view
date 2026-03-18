@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace Laminas\View\Helper\Service;
 
+use function gettype;
+use function is_array;
+
 use Laminas\View\Exception\RuntimeException;
 use Laminas\View\Factory\Configuration;
+
 use Laminas\View\Helper\Asset;
 use Psr\Container\ContainerInterface;
 
-use function gettype;
-use function is_array;
 use function sprintf;
 
 /**

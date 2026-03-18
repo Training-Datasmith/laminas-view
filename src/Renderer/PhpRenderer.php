@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace Laminas\View\Renderer;
 
+use function assert;
+
 use Laminas\View\Exception\RenderingFailedException;
 use Laminas\View\Helper\ViewModel as ViewModelHelper;
 use Laminas\View\HelperPluginManagerInterface;
 use Laminas\View\Model\ModelInterface;
 use Laminas\View\Model\ViewModel;
-use Laminas\View\Resolver\ResolverInterface;
 
-use function assert;
+use Laminas\View\Resolver\ResolverInterface;
 
 final class PhpRenderer implements RendererInterface
 {

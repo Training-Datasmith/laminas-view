@@ -4,17 +4,21 @@ declare(strict_types=1);
 
 namespace Laminas\View\Helper;
 
-use Laminas\View\Exception;
-use Traversable;
+use const E_USER_DEPRECATED;
 
 use function get_debug_type;
+
 use function is_array;
 use function iterator_to_array;
+
+use Laminas\View\Exception;
+
 use function method_exists;
 use function sprintf;
-use function trigger_error;
 
-use const E_USER_DEPRECATED;
+use Traversable;
+
+use function trigger_error;
 
 /**
  * Helper for rendering a template fragment in its own variable scope; iterates

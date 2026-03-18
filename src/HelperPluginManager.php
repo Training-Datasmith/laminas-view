@@ -4,19 +4,21 @@ declare(strict_types=1);
 
 namespace Laminas\View;
 
+use function array_replace_recursive;
+use function get_debug_type;
+use function is_callable;
+
 use Laminas\ServiceManager\AbstractPluginManager;
 use Laminas\ServiceManager\Exception\InvalidServiceException;
 use Laminas\ServiceManager\Factory\InvokableFactory;
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\View\Helper\HelperInterface;
 use Laminas\View\Helper\Service\EscapeHelperFactory;
+
 use Laminas\View\Helper\Service\GenericFactory;
 use Laminas\View\Helper\StatefulHelperInterface;
 use Psr\Container\ContainerInterface;
 
-use function array_replace_recursive;
-use function get_debug_type;
-use function is_callable;
 use function spl_object_id;
 use function sprintf;
 

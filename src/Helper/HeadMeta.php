@@ -4,21 +4,24 @@ declare(strict_types=1);
 
 namespace Laminas\View\Helper;
 
-use Laminas\Escaper\EscaperInterface;
-use Laminas\View\HTML\Tag;
-use Laminas\View\HtmlAttributesSet;
-use Stringable;
-
 use function array_filter;
 use function array_map;
 use function array_unshift;
 use function array_values;
+
 use function implode;
 use function is_int;
+
+use Laminas\Escaper\EscaperInterface;
+use Laminas\View\HTML\Tag;
+use Laminas\View\HtmlAttributesSet;
+
+use const PHP_EOL;
+
 use function sprintf;
 use function str_repeat;
 
-use const PHP_EOL;
+use Stringable;
 
 final class HeadMeta implements StatefulHelperInterface, Stringable
 {
@@ -75,7 +78,7 @@ final class HeadMeta implements StatefulHelperInterface, Stringable
         $indent   = $this->escaper->escapeHtml($indent);
 
         return implode($this->escaper->escapeHtml($this->separator), array_map(
-            fn(Tag $tag): string => $indent . $this->itemToString($tag),
+            fn (Tag $tag): string => $indent . $this->itemToString($tag),
             $this->items,
         ));
     }

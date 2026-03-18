@@ -4,16 +4,18 @@ declare(strict_types=1);
 
 namespace Laminas\View\Console;
 
+use function assert;
+use function file_put_contents;
+use function is_string;
+
 use Laminas\View\Exception\InvalidArgumentException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
+
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-use function assert;
-use function file_put_contents;
-use function is_string;
 use function trim;
 
 final class GenerateTemplateMapCommand extends Command

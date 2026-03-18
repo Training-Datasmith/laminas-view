@@ -4,15 +4,17 @@ declare(strict_types=1);
 
 namespace LaminasTest\View\Resolver\Factory;
 
+use function array_merge_recursive;
+
 use Laminas\ServiceManager\ServiceManager;
 use Laminas\View\ConfigProvider;
 use Laminas\View\Helper\ViewModel;
 use Laminas\View\HelperPluginManager;
 use Laminas\View\Model\ViewModel as Model;
 use Laminas\View\Resolver\Factory\AggregateResolverFactory;
+
 use PHPUnit\Framework\TestCase;
 
-use function array_merge_recursive;
 use function realpath;
 
 final class AggregateResolverFactoryTest extends TestCase

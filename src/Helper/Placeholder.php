@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace Laminas\View\Helper;
 
+use function implode;
+
 use Laminas\View\Exception\RuntimeException;
 use Laminas\View\Helper\Placeholder\Container;
 use Laminas\View\Helper\Placeholder\Position;
-use Stringable;
 
-use function implode;
+use Stringable;
 
 /**
  * Helper for aggregating string content between otherwise segregated Views.

@@ -29,7 +29,7 @@ final class HelperPluginManagerTest extends TestCase
     {
         $helpers = new HelperPluginManager(new ServiceManager(), [
             'factories' => [
-                'test' => fn(): self => $this,
+                'test' => fn (): self => $this,
             ],
         ]);
         $this->expectException(InvalidServiceException::class);
@@ -48,7 +48,7 @@ final class HelperPluginManagerTest extends TestCase
         $helper  = $this->createStub(HelperInterface::class);
         $helpers = new HelperPluginManager(new ServiceManager(), [
             'factories' => [
-                Partial::class => static fn(): HelperInterface => $helper,
+                Partial::class => static fn (): HelperInterface => $helper,
             ],
         ]);
         $this->assertSame($helper, $helpers->get(Partial::class));
@@ -60,7 +60,7 @@ final class HelperPluginManagerTest extends TestCase
         };
         $helpers = new HelperPluginManager(new ServiceManager(), [
             'factories' => [
-                'foo' => static fn(): callable => $helper,
+                'foo' => static fn (): callable => $helper,
             ],
         ]);
         $this->assertSame($helper, $helpers->get('foo'));
