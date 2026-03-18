@@ -32,7 +32,6 @@ final readonly class Configuration
     /** @return array<array-key, mixed> */
     public static function get(ContainerInterface $container): array
     {
-        /** @var mixed $config */
         $config = $container->has('config')
             ? $container->get('config')
             : [];

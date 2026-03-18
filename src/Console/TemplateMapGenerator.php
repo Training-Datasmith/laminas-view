@@ -141,7 +141,7 @@ final readonly class TemplateMapGenerator
     {
         $node     = explode(DIRECTORY_SEPARATOR, str_replace($this->directoryToScan, '', $file));
         $lastPart = array_pop($node);
-        $lastPart = substr($lastPart, 0, 0 - (strlen($this->fileSuffix) + 1));
+        $lastPart = substr($lastPart, 0, -(strlen($this->fileSuffix) + 1));
 
         return ltrim(implode('/', $node) . '/' . $lastPart, '/');
     }

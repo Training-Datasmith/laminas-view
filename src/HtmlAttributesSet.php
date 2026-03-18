@@ -184,10 +184,12 @@ final class HtmlAttributesSet extends ArrayObject implements Stringable
     {
         $list = [];
         foreach ($values as $value) {
-            if ($value === null || $value === '') {
+            if ($value === null) {
                 continue;
             }
-
+            if ($value === '') {
+                continue;
+            }
             if (! is_scalar($value)) {
                 throw new InvalidArgumentException(sprintf(
                     'The attribute "%s" is an array, but members must be scalar. %s received',

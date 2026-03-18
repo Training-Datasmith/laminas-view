@@ -118,8 +118,9 @@ final readonly class Doctype implements Stringable
      */
     public function isRdfa(?string $doctypeId = null): bool
     {
-        return $this->isHtml5($doctypeId)
-            ||
-            stripos($this->doctypeDeclaration($doctypeId), 'rdfa') !== false;
+        if ($this->isHtml5($doctypeId)) {
+            return true;
+        }
+        return stripos($this->doctypeDeclaration($doctypeId), 'rdfa') !== false;
     }
 }

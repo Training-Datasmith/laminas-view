@@ -87,7 +87,6 @@ final class TemplatePathStack implements ResolverInterface
      * Reset the path stack to the paths provided
      *
      * @param list<non-empty-string> $paths
-     * @return TemplatePathStack
      * @throws Exception\InvalidArgumentException
      */
     public function setPaths(array $paths): self
@@ -106,9 +105,8 @@ final class TemplatePathStack implements ResolverInterface
     private static function normalizePath(string $path): string
     {
         $path  = rtrim($path, '/\\');
-        $path .= DIRECTORY_SEPARATOR;
 
-        return $path;
+        return $path . DIRECTORY_SEPARATOR;
     }
 
     /**
