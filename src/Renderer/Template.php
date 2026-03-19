@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\View\Renderer;
 
+use function array_filter;
 use function array_key_exists;
 
 use ArrayIterator;
@@ -12,6 +13,7 @@ use function assert;
 use function extract;
 use function is_callable;
 use function is_string;
+use function str_starts_with;
 
 use IteratorAggregate;
 use Laminas\ServiceManager\Exception\ServiceNotFoundException;
@@ -68,8 +70,12 @@ final class Template implements IteratorAggregate
             $this->__renderLock = true;
             ob_start();
 
-            // Extract variables into local scope
-            $__localVars = $this->__variables;
+            // Extract variables into local scope, excluding internal double-underscore variables
+            $__localVars = array_filter(
+                $this->__variables,
+                static fn (string $k): bool => ! str_starts_with($k, '__'),
+                ARRAY_FILTER_USE_KEY,
+            );
             extract($__localVars); // phpcs:ignore Generic.PHP.ForbiddenFunctions
             unset($__localVars);
 
