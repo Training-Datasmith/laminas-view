@@ -1,15 +1,11 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace Laminas\View\Helper;
 
 use function array_key_exists;
-
 use Laminas\View\Exception;
-
 use function sprintf;
-
 /**
  * View helper plugin to fetch asset from resource map.
  */
@@ -18,10 +14,9 @@ final readonly class Asset
     /**
      * @param array<non-empty-string, non-empty-string> $resourceMap
      */
-    public function __construct(private array $resourceMap = [])
+    public function __construct(private array $resource_map = [])
     {
     }
-
     /**
      * @param non-empty-string $asset
      * @return non-empty-string
@@ -29,13 +24,9 @@ final readonly class Asset
      */
     public function __invoke(string $asset): string
     {
-        if (! array_key_exists($asset, $this->resourceMap)) {
-            throw new Exception\InvalidArgumentException(sprintf(
-                'The asset with the name "%s" has not been defined.',
-                $asset
-            ));
+        if (!array_key_exists($asset, $this->resource_map)) {
+            throw new Exception\InvalidArgumentException(sprintf('The asset with the name "%s" has not been defined.', $asset));
         }
-
-        return $this->resourceMap[$asset];
+        return $this->resource_map[$asset];
     }
 }

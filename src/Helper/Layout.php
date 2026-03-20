@@ -1,23 +1,19 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace Laminas\View\Helper;
 
 use Laminas\View\Exception\RuntimeException;
-use Laminas\View\Model\ModelInterface;
-
+use Laminas\View\Model\Model_Interface;
 use function sprintf;
-
 /**
  * View helper for changing the layout template or retrieving the layout (root) view model
  */
 final readonly class Layout
 {
-    public function __construct(private ViewModel $viewModelHelper)
+    public function __construct(private View_Model $view_model_helper)
     {
     }
-
     /**
      * Set layout template or retrieve "layout" view model
      *
@@ -27,33 +23,26 @@ final readonly class Layout
      * @param null|non-empty-string $template Provide a template name to set that template as the current layout
      * @return ($template is null ? ModelInterface : self)
      */
-    public function __invoke(string|null $template = null): ModelInterface|self
+    public function __invoke(string|null $template = null): Model_Interface|self
     {
-        $rootModel = $this->getRoot();
+        $root_model = $this->get_root();
         if (null === $template) {
-            return $rootModel;
+            return $root_model;
         }
-
-        $rootModel->setTemplate($template);
-
+        $root_model->set_template($template);
         return $this;
     }
-
     /**
      * Get the root view model
      *
      * @throws RuntimeException
      */
-    private function getRoot(): ModelInterface
+    private function get_root(): Model_Interface
     {
-        $root = $this->viewModelHelper->getRoot();
-        if (! $root instanceof ModelInterface) {
-            throw new RuntimeException(sprintf(
-                '%s: no view model currently registered as root in renderer',
-                __METHOD__
-            ));
+        $root = $this->view_model_helper->get_root();
+        if (!$root instanceof Model_Interface) {
+            throw new RuntimeException(sprintf('%s: no view model currently registered as root in renderer', __METHOD__));
         }
-
         return $root;
     }
 }

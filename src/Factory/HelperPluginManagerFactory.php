@@ -1,13 +1,11 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace Laminas\View\Factory;
 
-use Laminas\View\ConfigProvider;
-use Laminas\View\HelperPluginManager;
-use Psr\Container\ContainerInterface;
-
+use Laminas\View\Config_Provider;
+use Laminas\View\Helper_Plugin_Manager;
+use Psr\Container\Container_Interface;
 /**
  * @internal
  *
@@ -15,14 +13,13 @@ use Psr\Container\ContainerInterface;
  * @psalm-internal Laminas\View
  * @psalm-internal LaminasTest\View
  */
-final readonly class HelperPluginManagerFactory
+final readonly class Helper_Plugin_Manager_Factory
 {
-    public function __invoke(ContainerInterface $container): HelperPluginManager
+    public function __invoke(Container_Interface $container): Helper_Plugin_Manager
     {
         /** @var ViewConfigShape $applicationConfig */
-        $applicationConfig = Configuration::get($container);
-        $helperConfig      = $applicationConfig['view_helpers'] ?? [];
-
-        return new HelperPluginManager($container, $helperConfig);
+        $application_config = Configuration::get($container);
+        $helper_config = $application_config['view_helpers'] ?? [];
+        return new Helper_Plugin_Manager($container, $helper_config);
     }
 }

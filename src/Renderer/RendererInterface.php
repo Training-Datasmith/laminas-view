@@ -1,16 +1,14 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace Laminas\View\Renderer;
 
-use Laminas\View\Exception\RenderingFailedException;
-use Laminas\View\Model\ModelInterface;
-
+use Laminas\View\Exception\Rendering_Failed_Exception;
+use Laminas\View\Model\Model_Interface;
 /**
  * Interface class for Laminas\View\Renderer\* compatible template engine implementations
  */
-interface RendererInterface
+interface Renderer_Interface
 {
     /**
      * Processes a view script and returns the output.
@@ -22,8 +20,5 @@ interface RendererInterface
      * @return string The rendered output
      * @throws RenderingFailedException When any issue occurs during rendering.
      */
-    public function render(
-        string|ModelInterface $templateNameOrModel,
-        iterable|null $variables = null,
-    ): string;
+    public function render(string|Model_Interface $template_name_or_model, iterable|null $variables = null): string;
 }

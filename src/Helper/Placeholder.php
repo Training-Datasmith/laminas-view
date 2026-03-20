@@ -1,53 +1,44 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace Laminas\View\Helper;
 
 use function implode;
-
 use Laminas\View\Exception\RuntimeException;
 use Laminas\View\Helper\Placeholder\Container;
 use Laminas\View\Helper\Placeholder\Position;
-
 use Stringable;
-
 /**
  * Helper for aggregating string content between otherwise segregated Views.
  */
-final class Placeholder implements StatefulHelperInterface, Stringable
+final class Placeholder implements Stateful_Helper_Interface, Stringable
 {
     /**
      * Placeholder Containers
      *
      * @var array<string, Container<string>>
      */
-    private array $items                  = [];
-    private string|null $currentContainer = null;
+    private array $items = [];
+    private string|null $current_container = null;
     private string $separator;
     /** @var array<string, Position> */
-    private array $capturePosition = [];
-
-    public function __construct(
-        private readonly string $defaultSeparator = '',
-    ) {
-        $this->separator = $this->defaultSeparator;
+    private array $capture_position = [];
+    public function __construct(private readonly string $default_separator = '')
+    {
+        $this->separator = $this->default_separator;
     }
-
-    public function resetState(): void
+    public function reset_state(): void
     {
         foreach ($this->items as $container) {
-            if ($container->isCapturing()) {
-                $container->captureEnd();
+            if ($container->is_capturing()) {
+                $container->capture_end();
             }
         }
-
-        $this->separator        = $this->defaultSeparator;
-        $this->items            = [];
-        $this->currentContainer = null;
-        $this->capturePosition  = [];
+        $this->separator = $this->default_separator;
+        $this->items = [];
+        $this->current_container = null;
+        $this->capture_position = [];
     }
-
     /**
      * Instance Accessor
      */
@@ -56,94 +47,74 @@ final class Placeholder implements StatefulHelperInterface, Stringable
         if ($placeholder !== null) {
             $this->container($placeholder);
         }
-
         return $this;
     }
-
     /** @return Container<string> */
     private function container(string $name): Container
     {
-        $this->currentContainer = $name;
-        if (! isset($this->items[$name])) {
+        $this->current_container = $name;
+        if (!isset($this->items[$name])) {
             /** @psalm-var Container<string> */
             $this->items[$name] = new Container();
         }
-
         return $this->items[$name];
     }
-
-    public function containerExists(string $name): bool
+    public function container_exists(string $name): bool
     {
         return isset($this->items[$name]);
     }
-
     private function name(string|null $name): string
     {
-        $name ??= $this->currentContainer;
+        $name ??= $this->current_container;
         if ($name === null) {
             throw new RuntimeException('Cannot determine the name of the placeholder');
         }
-
         return $name;
     }
-
     public function append(string $content, string|null $placeholder = null): self
     {
         $this->container($this->name($placeholder))->append($content);
-
         return $this;
     }
-
     public function prepend(string $content, string|null $placeholder = null): self
     {
         $this->container($this->name($placeholder))->prepend($content);
-
         return $this;
     }
-
     public function set(string $content, string|null $placeholder = null): self
     {
         $this->container($this->name($placeholder))->set($content);
-
         return $this;
     }
-
-    public function toString(string|null $placeholder = null): string
+    public function to_string(string|null $placeholder = null): string
     {
-        return implode($this->separator, $this->container($this->name($placeholder))->toArray());
+        return implode($this->separator, $this->container($this->name($placeholder))->to_array());
     }
-
     public function __toString(): string
     {
-        return $this->toString();
+        return $this->to_string();
     }
-
-    public function captureStart(
-        string|null $placeholder = null,
-        Position $position = Position::Append,
-    ): void {
-        $name = $this->name($placeholder);
-        $this->container($name)->captureStart();
-        $this->capturePosition[$name] = $position;
-    }
-
-    public function captureEnd(string|null $placeholder = null): void
+    public function capture_start(string|null $placeholder = null, Position $position = Position::Append): void
     {
-        $name      = $this->name($placeholder);
+        $name = $this->name($placeholder);
+        $this->container($name)->capture_start();
+        $this->capture_position[$name] = $position;
+    }
+    public function capture_end(string|null $placeholder = null): void
+    {
+        $name = $this->name($placeholder);
         $container = $this->container($name);
-        $content   = $container->captureEnd();
-        $position  = $this->capturePosition[$name];
+        $content = $container->capture_end();
+        $position = $this->capture_position[$name];
         match ($position) {
             Position::Append => $container->append($content),
             Position::Prepend => $container->prepend($content),
             Position::Set => $container->set($content),
         };
     }
-
-    public function setSeparator(string $separator): self
+    public function set_separator(string $separator): self
     {
         $this->separator = $separator;
-
         return $this;
     }
 }

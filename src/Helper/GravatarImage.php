@@ -1,70 +1,47 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace Laminas\View\Helper;
 
-use Laminas\Escaper\EscaperInterface;
-use Laminas\View\HtmlAttributesSet;
-
+use Laminas\Escaper\Escaper_Interface;
+use Laminas\View\Html_Attributes_Set;
 use function md5;
 use function sprintf;
 use function strtolower;
 use function trim;
-
 /**
  * @psalm-import-type AttributeSet from HtmlAttributesSet
  */
-final readonly class GravatarImage
+final readonly class Gravatar_Image
 {
     private const GRAVATAR_URL = '//www.gravatar.com/avatar';
-
     /**
      * RATING_* constants describe the "rating" of the avatar image that is most suitable for your audience.
      *
      * @link https://en.gravatar.com/site/implement/images/#rating
      */
-    public const RATING_G  = 'g';
+    public const RATING_G = 'g';
     public const RATING_PG = 'pg';
-    public const RATING_R  = 'r';
-    public const RATING_X  = 'x';
-
+    public const RATING_R = 'r';
+    public const RATING_X = 'x';
     /**
      * DEFAULT_* constants describe the fallback image type that will be displayed when a profile does not exist.
      *
      * @link https://en.gravatar.com/site/implement/images/#default-image
      */
-    public const DEFAULT_404       = '404';
-    public const DEFAULT_MP        = 'mp';
+    public const DEFAULT_404 = '404';
+    public const DEFAULT_MP = 'mp';
     public const DEFAULT_IDENTICON = 'identicon';
     public const DEFAULT_MONSTERID = 'monsterid';
-    public const DEFAULT_WAVATAR   = 'wavatar';
-    public const DEFAULT_RETRO     = 'retro';
-    public const DEFAULT_ROBOHASH  = 'robohash';
-    public const DEFAULT_BLANK     = 'blank';
-
-    public const RATINGS = [
-        self::RATING_G,
-        self::RATING_PG,
-        self::RATING_R,
-        self::RATING_X,
-    ];
-
-    public const DEFAULT_IMAGE_VALUES = [
-        self::DEFAULT_404,
-        self::DEFAULT_MP,
-        self::DEFAULT_IDENTICON,
-        self::DEFAULT_MONSTERID,
-        self::DEFAULT_WAVATAR,
-        self::DEFAULT_RETRO,
-        self::DEFAULT_ROBOHASH,
-        self::DEFAULT_BLANK,
-    ];
-
-    public function __construct(private EscaperInterface $escaper)
+    public const DEFAULT_WAVATAR = 'wavatar';
+    public const DEFAULT_RETRO = 'retro';
+    public const DEFAULT_ROBOHASH = 'robohash';
+    public const DEFAULT_BLANK = 'blank';
+    public const RATINGS = [self::RATING_G, self::RATING_PG, self::RATING_R, self::RATING_X];
+    public const DEFAULT_IMAGE_VALUES = [self::DEFAULT_404, self::DEFAULT_MP, self::DEFAULT_IDENTICON, self::DEFAULT_MONSTERID, self::DEFAULT_WAVATAR, self::DEFAULT_RETRO, self::DEFAULT_ROBOHASH, self::DEFAULT_BLANK];
+    public function __construct(private Escaper_Interface $escaper)
     {
     }
-
     /**
      * @param non-empty-string                                  $emailAddress
      * @param positive-int                                      $imageSize
@@ -72,27 +49,11 @@ final readonly class GravatarImage
      * @psalm-param value-of<self::DEFAULT_IMAGE_VALUES>|string $defaultImage
      * @psalm-param value-of<self::RATINGS>                     $rating
      */
-    public function __invoke(
-        string $emailAddress,
-        int $imageSize = 80,
-        array $imageAttributes = [],
-        string $defaultImage = self::DEFAULT_MP,
-        string $rating = self::RATING_G
-    ): string {
-        $imageAttributes['width'] = $imageAttributes['height'] = $imageSize;
-        $imageAttributes['alt'] ??= '';
-        $imageAttributes['src']   = sprintf(
-            '%s/%s?s=%d&r=%s&d=%s',
-            self::GRAVATAR_URL,
-            md5(strtolower(trim($emailAddress))),
-            $imageSize,
-            $rating,
-            $this->escaper->escapeUrl($defaultImage)
-        );
-
-        return sprintf(
-            '<img%s />',
-            (string) new HtmlAttributesSet($this->escaper, $imageAttributes)
-        );
+    public function __invoke(string $email_address, int $image_size = 80, array $image_attributes = [], string $default_image = self::DEFAULT_MP, string $rating = self::RATING_G): string
+    {
+        $image_attributes['width'] = $image_attributes['height'] = $image_size;
+        $image_attributes['alt'] ??= '';
+        $image_attributes['src'] = sprintf('%s/%s?s=%d&r=%s&d=%s', self::GRAVATAR_URL, md5(strtolower(trim($email_address))), $image_size, $rating, $this->escaper->escape_url($default_image));
+        return sprintf('<img%s />', (string) new Html_Attributes_Set($this->escaper, $image_attributes));
     }
 }

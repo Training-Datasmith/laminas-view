@@ -1,46 +1,36 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace Laminas\View\Helper;
 
 use const E_USER_DEPRECATED;
-
 use function get_object_vars;
 use function is_array;
 use function iterator_to_array;
-
 use Laminas\View\Exception\RuntimeException;
-use Laminas\View\Model\ModelInterface;
-use Laminas\View\Renderer\PhpRenderer;
-
+use Laminas\View\Model\Model_Interface;
+use Laminas\View\Renderer\Php_Renderer;
 use function method_exists;
-
 use Traversable;
-
 use function trigger_error;
-
 /**
  * Helper for rendering a template fragment in its own variable scope.
  */
-final class Partial implements StatefulHelperInterface
+final class Partial implements Stateful_Helper_Interface
 {
     /**
      * Variable to which object will be assigned
      *
      * @var non-empty-string|null
      */
-    private string|null $objectKey = null;
-
-    public function __construct(private readonly PhpRenderer $renderer)
+    private string|null $object_key = null;
+    public function __construct(private readonly Php_Renderer $renderer)
     {
     }
-
-    public function resetState(): void
+    public function reset_state(): void
     {
-        $this->objectKey = null;
+        $this->object_key = null;
     }
-
     /**
      * Renders a template fragment within a variable scope distinct from the
      * calling View object. It proxies to view's render function
@@ -50,79 +40,60 @@ final class Partial implements StatefulHelperInterface
      * @return ($name is null ? self : string)
      * @throws RuntimeException
      */
-    public function __invoke(
-        string|ModelInterface|null $name = null,
-        iterable|object|null $values = null,
-    ): string|self {
+    public function __invoke(string|Model_Interface|null $name = null, iterable|object|null $values = null): string|self
+    {
         if ($name === null) {
             return $this;
         }
-
         // If we were passed only a view model, just render it.
-        if ($name instanceof ModelInterface) {
+        if ($name instanceof Model_Interface) {
             return $this->renderer->render($name);
         }
-
-        return $this->renderer->render($name, $this->extractVariablesForRender($values));
+        return $this->renderer->render($name, $this->extract_variables_for_render($values));
     }
-
     /**
      * @param iterable<non-empty-string, mixed>|object|null $values
      * @return iterable<non-empty-string, mixed>
      */
-    private function extractVariablesForRender(iterable|object|null $values): iterable
+    private function extract_variables_for_render(iterable|object|null $values): iterable
     {
         if ($values === null) {
             return [];
         }
-
         if (is_array($values)) {
             return $values;
         }
-
-        if ($values instanceof ModelInterface) {
-            return $values->getVariables();
+        if ($values instanceof Model_Interface) {
+            return $values->get_variables();
         }
-
-        if ($this->objectKey !== null) {
-            return [$this->objectKey => $values];
+        if ($this->object_key !== null) {
+            return [$this->object_key => $values];
         }
-
         if ($values instanceof Traversable) {
             return iterator_to_array($values);
         }
-
         if (method_exists($values, 'toArray')) {
-            trigger_error(
-                'Non-iterable objects implementing a `toArray` method will be rejected in version 4.0 '
-                . 'of laminas-view ',
-                E_USER_DEPRECATED,
-            );
-
+            trigger_error('Non-iterable objects implementing a `toArray` method will be rejected in version 4.0 ' . 'of laminas-view ', E_USER_DEPRECATED);
             /** @psalm-var mixed $variables */
-            $variables = $values->toArray();
-
+            $variables = $values->to_array();
             if (is_array($variables)) {
-                return $variables; // We cannot guarantee iterable<non-empty-string, mixed> here
+                return $variables;
+                // We cannot guarantee iterable<non-empty-string, mixed> here
             }
         }
-
         /** @psalm-var array<non-empty-string, mixed> */
         return get_object_vars($values);
     }
-
     /**
      * Set object key
      *
      * @param non-empty-string|null $key
      */
-    public function setObjectKey(string|null $key): self
+    public function set_object_key(string|null $key): self
     {
-        $this->objectKey = $key;
-
+        $this->object_key = $key;
         return $this;
     }
-
     /**
      * Retrieve object key
      *
@@ -131,8 +102,8 @@ final class Partial implements StatefulHelperInterface
      *
      * @return non-empty-string|null
      */
-    public function getObjectKey(): string|null
+    public function get_object_key(): string|null
     {
-        return $this->objectKey;
+        return $this->object_key;
     }
 }

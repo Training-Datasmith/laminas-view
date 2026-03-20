@@ -1,34 +1,26 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace Laminas\View\Helper;
 
 use function is_array;
-
-use Laminas\Escaper\EscaperInterface;
+use Laminas\Escaper\Escaper_Interface;
 use Laminas\View\Exception;
-
-use Laminas\View\HtmlAttributesSet;
-
+use Laminas\View\Html_Attributes_Set;
 use const PHP_EOL;
-
 use function sprintf;
 use function strlen;
-
 use function substr;
-
 /**
  * Helper for ordered and unordered lists
  *
  * @psalm-import-type AttributeSet from HtmlAttributesSet
  */
-final readonly class HtmlList
+final readonly class Html_List
 {
-    public function __construct(private EscaperInterface $escaper)
+    public function __construct(private Escaper_Interface $escaper)
     {
     }
-
     /**
      * Generates a 'List' element.
      *
@@ -39,45 +31,28 @@ final readonly class HtmlList
      * @throws Exception\InvalidArgumentException If $items is empty.
      * @return string The list XHTML.
      */
-    public function __invoke(
-        array $items,
-        bool $ordered = false,
-        array|null $attribs = null,
-        bool $escape = true,
-    ): string {
+    public function __invoke(array $items, bool $ordered = false, array|null $attribs = null, bool $escape = true): string
+    {
         if ($items === []) {
-            throw new Exception\InvalidArgumentException(sprintf(
-                '$items array can not be empty in %s',
-                __METHOD__
-            ));
+            throw new Exception\InvalidArgumentException(sprintf('$items array can not be empty in %s', __METHOD__));
         }
-
         $list = '';
-
         foreach ($items as $item) {
-            if (! is_array($item)) {
-                $markup = $escape
-                    ? $this->escaper->escapeHtml((string) $item)
-                    : (string) $item;
-                $list  .= '<li>' . $markup . '</li>' . PHP_EOL;
+            if (!is_array($item)) {
+                $markup = $escape ? $this->escaper->escape_html((string) $item) : (string) $item;
+                $list .= '<li>' . $markup . '</li>' . PHP_EOL;
             } else {
                 /** @psalm-var list<scalar|list<scalar>> $item */
-                $itemLength = strlen('</li>' . PHP_EOL);
-                if ($itemLength < strlen($list)) {
-                    $list = substr($list, 0, strlen($list) - $itemLength)
-                     . $this->__invoke($item, $ordered, $attribs, $escape) . '</li>' . PHP_EOL;
+                $item_length = strlen('</li>' . PHP_EOL);
+                if ($item_length < strlen($list)) {
+                    $list = substr($list, 0, strlen($list) - $item_length) . $this->__invoke($item, $ordered, $attribs, $escape) . '</li>' . PHP_EOL;
                 } else {
                     $list .= '<li>' . $this->__invoke($item, $ordered, $attribs, $escape) . '</li>' . PHP_EOL;
                 }
             }
         }
-
-        $attributes = is_array($attribs)
-            ? (string) new HtmlAttributesSet($this->escaper, $attribs)
-            : '';
-
+        $attributes = is_array($attribs) ? (string) new Html_Attributes_Set($this->escaper, $attribs) : '';
         $tag = $ordered ? 'ol' : 'ul';
-
         return '<' . $tag . $attributes . '>' . PHP_EOL . $list . '</' . $tag . '>' . PHP_EOL;
     }
 }

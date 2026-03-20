@@ -1,13 +1,11 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace Laminas\View;
 
-use Laminas\View\Exception\RenderingFailedException;
-use Laminas\View\Model\ModelInterface;
-
-interface ViewInterface
+use Laminas\View\Exception\Rendering_Failed_Exception;
+use Laminas\View\Model\Model_Interface;
+interface View_Interface
 {
     /**
      * Render a template
@@ -18,12 +16,7 @@ interface ViewInterface
      * @param iterable<non-empty-string, mixed>|null|ModelInterface $variables
      * @throws RenderingFailedException When any exception occurs during render.
      */
-    public function render(
-        string|ModelInterface $modelOrTemplate,
-        iterable|ModelInterface|null $variables = null,
-        bool $enableLayout = true,
-    ): string;
-
+    public function render(string|Model_Interface $model_or_template, iterable|Model_Interface|null $variables = null, bool $enable_layout = true): string;
     /**
      * Render a configured top-level layout view model
      *
@@ -32,5 +25,5 @@ interface ViewInterface
      *
      * @throws RenderingFailedException When any exception occurs during render.
      */
-    public function renderLayout(ModelInterface $layout): string;
+    public function render_layout(Model_Interface $layout): string;
 }

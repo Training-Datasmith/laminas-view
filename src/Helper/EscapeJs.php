@@ -1,13 +1,12 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace Laminas\View\Helper;
 
-final readonly class EscapeJs extends Escaper\AbstractHelper
+final readonly class Escape_Js extends Escaper\Abstract_Helper
 {
     protected function escape(string $value): string
     {
-        return $this->escaper->escapeJs($value);
+        return $this->escaper->escape_js($value);
     }
 }

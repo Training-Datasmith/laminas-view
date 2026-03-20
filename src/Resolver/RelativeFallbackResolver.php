@@ -1,15 +1,12 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace Laminas\View\Resolver;
 
-use Laminas\View\Helper\ViewModel;
-use Laminas\View\Model\ModelInterface;
-
+use Laminas\View\Helper\View_Model;
+use Laminas\View\Model\Model_Interface;
 use function strrpos;
 use function substr;
-
 /**
  * Relative fallback resolver - resolves to view templates in a sub-path of the
  * currently set view model's template.
@@ -19,46 +16,36 @@ use function substr;
  * This allows for usage of partial template paths such as `some/partial`, resolving to
  * `my/module/script/path/some/partial.phtml`, while rendering template `my/module/script/path/my-view`
  */
-final readonly class RelativeFallbackResolver implements ResolverInterface
+final readonly class Relative_Fallback_Resolver implements Resolver_Interface
 {
     public const NS_SEPARATOR = '/';
-
-    public function __construct(
-        private ResolverInterface $resolver,
-        private ViewModel $viewModelHelper,
-    ) {
+    public function __construct(private Resolver_Interface $resolver, private View_Model $view_model_helper)
+    {
     }
-
     /** @inheritDoc */
     public function resolve(string $name): string|false
     {
-        $template = $this->resolveTemplateName($name);
+        $template = $this->resolve_template_name($name);
         if ($template === false) {
             return false;
         }
-
         return $this->resolver->resolve($template);
     }
-
     /**
      * @param non-empty-string $name
      * @return non-empty-string|false
      */
-    private function resolveTemplateName(string $name): string|false
+    private function resolve_template_name(string $name): string|false
     {
-        $currentModel = $this->viewModelHelper->getCurrent();
-
-        if (! $currentModel instanceof ModelInterface) {
+        $current_model = $this->view_model_helper->get_current();
+        if (!$current_model instanceof Model_Interface) {
             return false;
         }
-
-        $currentTemplate = $currentModel->getTemplate();
-        $position        = strrpos($currentTemplate, self::NS_SEPARATOR);
-
+        $current_template = $current_model->get_template();
+        $position = strrpos($current_template, self::NS_SEPARATOR);
         if ($position === false) {
             return false;
         }
-
-        return substr($currentTemplate, 0, $position) . self::NS_SEPARATOR . $name;
+        return substr($current_template, 0, $position) . self::NS_SEPARATOR . $name;
     }
 }

@@ -1,38 +1,31 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace Laminas\View\Helper;
 
 use Laminas\View\Exception\RuntimeException;
-
 use function ltrim;
 use function rtrim;
 use function sprintf;
-
 /**
  * Helper for retrieving the base path.
  */
-final class BasePath implements StatefulHelperInterface
+final class Base_Path implements Stateful_Helper_Interface
 {
-    private string|null $basePath;
-    private readonly string|null $configuredBasePath;
-
-    public function __construct(string|null $basePath = null)
+    private string|null $base_path;
+    private readonly string|null $configured_base_path;
+    public function __construct(string|null $base_path = null)
     {
-        if ($basePath !== null) {
-            $basePath = rtrim($basePath, '/');
+        if ($base_path !== null) {
+            $base_path = rtrim($base_path, '/');
         }
-
-        $this->basePath           = $basePath;
-        $this->configuredBasePath = $basePath;
+        $this->base_path = $base_path;
+        $this->configured_base_path = $base_path;
     }
-
-    public function resetState(): void
+    public function reset_state(): void
     {
-        $this->basePath = $this->configuredBasePath;
+        $this->base_path = $this->configured_base_path;
     }
-
     /**
      * Returns site's base path, or file with base path prepended.
      *
@@ -42,27 +35,20 @@ final class BasePath implements StatefulHelperInterface
      */
     public function __invoke(string|null $file = null): string
     {
-        if ($this->basePath === null) {
+        if ($this->base_path === null) {
             throw new RuntimeException('No base path provided');
         }
-
         if ($file !== null && $file !== '') {
-            return sprintf(
-                '%s/%s',
-                $this->basePath,
-                ltrim($file, '/'),
-            );
+            return sprintf('%s/%s', $this->base_path, ltrim($file, '/'));
         }
-
-        return $this->basePath;
+        return $this->base_path;
     }
-
     /**
      * Set the base path.
      */
-    public function setBasePath(string $basePath): self
+    public function set_base_path(string $base_path): self
     {
-        $this->basePath = rtrim($basePath, '/');
+        $this->base_path = rtrim($base_path, '/');
         return $this;
     }
 }

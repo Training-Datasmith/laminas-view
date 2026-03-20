@@ -1,16 +1,13 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace Laminas\View\Console;
 
 use function array_pop;
 use function array_slice;
 use function assert;
 use function basename;
-
 use const DIRECTORY_SEPARATOR;
-
 use function dirname;
 use function explode;
 use function implode;
@@ -18,129 +15,87 @@ use function is_dir;
 use function is_readable;
 use function is_string;
 use function is_writable;
-
 use Laminas\View\Exception\InvalidArgumentException;
-
 use function ltrim;
-
 use const PHP_EOL;
-
 use function realpath;
-
-use RecursiveDirectoryIterator;
-use RecursiveIteratorIterator;
-
+use Recursive_Directory_Iterator;
+use Recursive_Iterator_Iterator;
 use function sort;
-
-use SplFileInfo;
-
+use Spl_File_Info;
 use function sprintf;
 use function str_ends_with;
 use function str_repeat;
 use function str_replace;
 use function str_starts_with;
 use function strlen;
-
 use function strtolower;
 use function substr;
-
 /**
  * @internal
  *
  * @psalm-internal Laminas\View
  * @psalm-internal LaminasTest\View
  */
-final readonly class TemplateMapGenerator
+final readonly class Template_Map_Generator
 {
-    public string $directoryToScan;
-    public string $destinationFilePath;
-
-    public function __construct(
-        string $directoryToScan,
-        string $destinationFilePath,
-        public string $fileSuffix = 'phtml',
-    ) {
-        $directory = realpath($directoryToScan);
-        if (! is_string($directory) || ! is_dir($directory) || ! is_readable($directory)) {
-            throw new InvalidArgumentException(sprintf(
-                'The given template directory does not exist, or it is not readable: %s',
-                $directoryToScan,
-            ));
+    public string $directory_to_scan;
+    public string $destination_file_path;
+    public function __construct(string $directory_to_scan, string $destination_file_path, public string $file_suffix = 'phtml')
+    {
+        $directory = realpath($directory_to_scan);
+        if (!is_string($directory) || !is_dir($directory) || !is_readable($directory)) {
+            throw new InvalidArgumentException(sprintf('The given template directory does not exist, or it is not readable: %s', $directory_to_scan));
         }
-
-        $this->directoryToScan = $directory;
-
-        if (! str_ends_with($destinationFilePath, '.php')) {
+        $this->directory_to_scan = $directory;
+        if (!str_ends_with($destination_file_path, '.php')) {
             throw new InvalidArgumentException('A .php file name extension is required for the target file');
         }
-
-        $destinationDirectory = realpath(dirname($destinationFilePath));
-
-        if (! is_string($destinationDirectory) || ! is_writable($destinationDirectory)) {
-            throw new InvalidArgumentException(sprintf(
-                'The target directory is not writable: %s',
-                dirname($destinationFilePath),
-            ));
+        $destination_directory = realpath(dirname($destination_file_path));
+        if (!is_string($destination_directory) || !is_writable($destination_directory)) {
+            throw new InvalidArgumentException(sprintf('The target directory is not writable: %s', dirname($destination_file_path)));
         }
-
-        $this->destinationFilePath = $destinationDirectory . DIRECTORY_SEPARATOR . basename($destinationFilePath);
+        $this->destination_file_path = $destination_directory . DIRECTORY_SEPARATOR . basename($destination_file_path);
     }
-
     public function __invoke(): string
     {
-        $relativePath = $this->computeRelativePath();
-        $map          = [];
-        foreach ($this->findTemplates() as $template) {
-            $map[] = sprintf(
-                "%s'%s' => __DIR__ . '%s%s%s',",
-                str_repeat(' ', 12),
-                $this->name($template),
-                DIRECTORY_SEPARATOR,
-                str_repeat('../', $relativePath['ascend']),
-                ltrim(str_replace($relativePath['ancestor'], '', $template), DIRECTORY_SEPARATOR),
-            );
+        $relative_path = $this->compute_relative_path();
+        $map = [];
+        foreach ($this->find_templates() as $template) {
+            $map[] = sprintf("%s'%s' => __DIR__ . '%s%s%s',", str_repeat(' ', 12), $this->name($template), DIRECTORY_SEPARATOR, str_repeat('../', $relative_path['ascend']), ltrim(str_replace($relative_path['ancestor'], '', $template), DIRECTORY_SEPARATOR));
         }
-
         $entries = implode(PHP_EOL, $map);
-
         return <<<PHP
-            <?php
-            declare(strict_types=1);
-            
-            return [
-                'templates' => [
-                    'map' => [
-            {$entries}
-                    ],
+        <?php
+        declare(strict_types=1);
+        
+        return [
+            'templates' => [
+                'map' => [
+        {$entries}
                 ],
-            ];
-            
-            PHP;
+            ],
+        ];
+        
+        PHP;
     }
-
     /**
      * @return array{
      *     ancestor: string,
      *     ascend: int,
      * }
      */
-    private function computeRelativePath(): array
+    private function compute_relative_path(): array
     {
-        $dir = dirname($this->destinationFilePath);
-        $up  = 0;
-        while (str_starts_with($this->directoryToScan, $dir) === false) {
+        $dir = dirname($this->destination_file_path);
+        $up = 0;
+        while (str_starts_with($this->directory_to_scan, $dir) === false) {
             $dir = implode(DIRECTORY_SEPARATOR, array_slice(explode(DIRECTORY_SEPARATOR, $dir), 0, -1));
             $up++;
         }
-
         assert($dir !== '');
-
-        return [
-            'ancestor' => $dir,
-            'ascend'   => $up,
-        ];
+        return ['ancestor' => $dir, 'ascend' => $up];
     }
-
     /**
      * Create a 'name' for the template based on its file path
      *
@@ -148,37 +103,27 @@ final readonly class TemplateMapGenerator
      */
     private function name(string $file): string
     {
-        $node     = explode(DIRECTORY_SEPARATOR, str_replace($this->directoryToScan, '', $file));
-        $lastPart = array_pop($node);
-        $lastPart = substr($lastPart, 0, -(strlen($this->fileSuffix) + 1));
-
-        return ltrim(implode('/', $node) . '/' . $lastPart, '/');
+        $node = explode(DIRECTORY_SEPARATOR, str_replace($this->directory_to_scan, '', $file));
+        $last_part = array_pop($node);
+        $last_part = substr($last_part, 0, -(strlen($this->file_suffix) + 1));
+        return ltrim(implode('/', $node) . '/' . $last_part, '/');
     }
-
     /** @return list<non-empty-string> */
-    private function findTemplates(): array
+    private function find_templates(): array
     {
-        $rdi = new RecursiveDirectoryIterator(
-            $this->directoryToScan,
-            RecursiveDirectoryIterator::FOLLOW_SYMLINKS | RecursiveDirectoryIterator::SKIP_DOTS,
-        );
-        $rii = new RecursiveIteratorIterator($rdi, RecursiveIteratorIterator::LEAVES_ONLY);
-
+        $rdi = new Recursive_Directory_Iterator($this->directory_to_scan, Recursive_Directory_Iterator::FOLLOW_SYMLINKS | Recursive_Directory_Iterator::SKIP_DOTS);
+        $rii = new Recursive_Iterator_Iterator($rdi, Recursive_Iterator_Iterator::LEAVES_ONLY);
         $files = [];
         foreach ($rii as $file) {
-            assert($file instanceof SplFileInfo);
-            if (strtolower($file->getExtension()) !== $this->fileSuffix) {
+            assert($file instanceof Spl_File_Info);
+            if (strtolower($file->get_extension()) !== $this->file_suffix) {
                 continue;
             }
-
-            $realPath = $file->getRealPath();
-            assert($realPath !== false);
-
-            $files[] = $realPath;
+            $real_path = $file->get_real_path();
+            assert($real_path !== false);
+            $files[] = $real_path;
         }
-
         sort($files);
-
         return $files;
     }
 }

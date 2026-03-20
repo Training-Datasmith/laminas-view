@@ -1,10 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace Laminas\View\Resolver;
 
-interface ResolverInterface
+interface Resolver_Interface
 {
     /**
      * Resolve a template/pattern name to a resource the renderer can consume

@@ -1,91 +1,59 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace Laminas\View\Renderer;
 
 use function assert;
-
-use Laminas\View\Exception\RenderingFailedException;
-use Laminas\View\Helper\ViewModel as ViewModelHelper;
-use Laminas\View\HelperPluginManagerInterface;
-use Laminas\View\Model\ModelInterface;
-use Laminas\View\Model\ViewModel;
-
-use Laminas\View\Resolver\ResolverInterface;
-
-final class PhpRenderer implements RendererInterface
+use Laminas\View\Exception\Rendering_Failed_Exception;
+use Laminas\View\Helper\View_Model as ViewModelHelper;
+use Laminas\View\Helper_Plugin_Manager_Interface;
+use Laminas\View\Model\Model_Interface;
+use Laminas\View\Model\View_Model;
+use Laminas\View\Resolver\Resolver_Interface;
+final class Php_Renderer implements Renderer_Interface
 {
     /** @var (callable(string): string)|null */
     private $filter;
-
-    public function __construct(
-        private readonly HelperPluginManagerInterface $pluginManager,
-        private readonly ResolverInterface $templateResolver,
-        private readonly bool $strictVariables = true,
-    ) {
+    public function __construct(private readonly Helper_Plugin_Manager_Interface $plugin_manager, private readonly Resolver_Interface $template_resolver, private readonly bool $strict_variables = true)
+    {
     }
-
     /**
      * Set a post-rendering filter to apply to the rendered output
      *
      * @param callable(string): string $filter
      */
-    public function setFilter(callable $filter): self
+    public function set_filter(callable $filter): self
     {
         $this->filter = $filter;
-
         return $this;
     }
-
     /** @inheritDoc */
-    public function render(
-        string|ModelInterface $templateNameOrModel,
-        iterable|null $variables = null,
-    ): string {
-        $templateName = $templateNameOrModel instanceof ModelInterface
-            ? $templateNameOrModel->getTemplate()
-            : $templateNameOrModel;
-
-        if ($templateName === '') {
-            throw RenderingFailedException::becauseATemplateWasNotSpecified();
+    public function render(string|Model_Interface $template_name_or_model, iterable|null $variables = null): string
+    {
+        $template_name = $template_name_or_model instanceof Model_Interface ? $template_name_or_model->get_template() : $template_name_or_model;
+        if ($template_name === '') {
+            throw Rendering_Failed_Exception::because_a_template_was_not_specified();
         }
-
-        if ($templateNameOrModel instanceof ModelInterface && $variables !== null) {
-            throw RenderingFailedException::becauseOfAmbiguousArgumentsToPhpRenderer();
+        if ($template_name_or_model instanceof Model_Interface && $variables !== null) {
+            throw Rendering_Failed_Exception::because_of_ambiguous_arguments_to_php_renderer();
         }
-
-        $viewModel = $templateNameOrModel instanceof ModelInterface
-            ? $templateNameOrModel
-            : new ViewModel($variables ?? [], $templateName);
-
-        $content = $this->renderModel($viewModel);
-
+        $view_model = $template_name_or_model instanceof Model_Interface ? $template_name_or_model : new View_Model($variables ?? [], $template_name);
+        $content = $this->render_model($view_model);
         if ($this->filter !== null) {
             return ($this->filter)($content);
         }
-
         return $content;
     }
-
-    private function renderModel(ModelInterface $model): string
+    private function render_model(Model_Interface $model): string
     {
-        $template = $model->getTemplate();
+        $template = $model->get_template();
         assert($template !== '');
-
-        $filename = $this->templateResolver->resolve($template);
+        $filename = $this->template_resolver->resolve($template);
         if ($filename === false) {
-            throw RenderingFailedException::becauseTheTemplateCannotBeResolvedToAFile($template);
+            throw Rendering_Failed_Exception::because_the_template_cannot_be_resolved_to_a_file($template);
         }
-
-        $helper = $this->pluginManager->get(ViewModelHelper::class);
-        $helper->setCurrent($model);
-
-        return (new Template(
-            $filename,
-            $model->getVariables(),
-            $this->pluginManager,
-            $this->strictVariables,
-        ))();
+        $helper = $this->plugin_manager->get(View_Model_Helper::class);
+        $helper->set_current($model);
+        return (new Template($filename, $model->get_variables(), $this->plugin_manager, $this->strict_variables))();
     }
 }

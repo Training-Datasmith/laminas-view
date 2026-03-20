@@ -1,35 +1,33 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace Laminas\View;
 
 use Laminas\View\Exception\RuntimeException;
 use Laminas\View\Helper\Asset;
-use Laminas\View\Helper\BasePath;
+use Laminas\View\Helper\Base_Path;
 use Laminas\View\Helper\Cycle;
 use Laminas\View\Helper\Doctype;
-use Laminas\View\Helper\Escaper\AbstractHelper;
-use Laminas\View\Helper\GravatarImage;
-use Laminas\View\Helper\HeadLink;
-use Laminas\View\Helper\HeadMeta;
-use Laminas\View\Helper\HeadScript;
-use Laminas\View\Helper\HeadStyle;
-use Laminas\View\Helper\HeadTitle;
-use Laminas\View\Helper\HtmlList;
-use Laminas\View\Helper\HtmlObject;
-use Laminas\View\Helper\HtmlTag;
-use Laminas\View\Helper\InlineScript;
+use Laminas\View\Helper\Escaper\Abstract_Helper;
+use Laminas\View\Helper\Gravatar_Image;
+use Laminas\View\Helper\Head_Link;
+use Laminas\View\Helper\Head_Meta;
+use Laminas\View\Helper\Head_Script;
+use Laminas\View\Helper\Head_Style;
+use Laminas\View\Helper\Head_Title;
+use Laminas\View\Helper\Html_List;
+use Laminas\View\Helper\Html_Object;
+use Laminas\View\Helper\Html_Tag;
+use Laminas\View\Helper\Inline_Script;
 use Laminas\View\Helper\Layout;
 use Laminas\View\Helper\Partial;
-use Laminas\View\Helper\PartialLoop;
+use Laminas\View\Helper\Partial_Loop;
 use Laminas\View\Helper\Placeholder;
 use Laminas\View\Helper\Placeholder\Position;
-use Laminas\View\Helper\RenderChildModel;
-use Laminas\View\Helper\ViewModel;
-use Laminas\View\Model\ModelInterface;
+use Laminas\View\Helper\Render_Child_Model;
+use Laminas\View\Helper\View_Model;
+use Laminas\View\Model\Model_Interface;
 use Stringable;
-
 /**
  * This interface is used only for the purposes of auto-completion in your IDE
  *
@@ -41,7 +39,7 @@ use Stringable;
  * @psalm-api
  * @psalm-import-type AttributeSet from HtmlAttributesSet
  */
-interface TemplateInterface
+interface Template_Interface
 {
     /**
      * @see Asset
@@ -51,7 +49,6 @@ interface TemplateInterface
      * @throws Exception\InvalidArgumentException
      */
     public function asset(string $asset): string;
-
     /**
      * Returns site's base path, or file with base path prepended.
      *
@@ -61,8 +58,7 @@ interface TemplateInterface
      *
      * @throws RuntimeException
      */
-    public function basePath(string|null $file = null): string;
-
+    public function base_path(string|null $file = null): string;
     /**
      * Add elements to alternate
      *
@@ -71,10 +67,8 @@ interface TemplateInterface
      * @param list<scalar|Stringable> $data
      */
     public function cycle(array $data = [], string $name = 'default'): Cycle;
-
     /** @see Doctype */
     public function doctype(): Doctype;
-
     /**
      * @see AbstractHelper
      *
@@ -84,8 +78,7 @@ interface TemplateInterface
      * @return mixed Given a scalar, a scalar value is returned. Given an object, with the $recurse flag not
      *               allowing object recursion, returns a string. Otherwise, returns an array.
      */
-    public function escapeCss(mixed $value, int $recurse = AbstractHelper::RECURSE_NONE): mixed;
-
+    public function escape_css(mixed $value, int $recurse = Abstract_Helper::RECURSE_NONE): mixed;
     /**
      * @see AbstractHelper
      *
@@ -95,8 +88,7 @@ interface TemplateInterface
      * @return mixed Given a scalar, a scalar value is returned. Given an object, with the $recurse flag not
      *               allowing object recursion, returns a string. Otherwise, returns an array.
      */
-    public function escapeHtml(mixed $value, int $recurse = AbstractHelper::RECURSE_NONE): mixed;
-
+    public function escape_html(mixed $value, int $recurse = Abstract_Helper::RECURSE_NONE): mixed;
     /**
      * @see AbstractHelper
      *
@@ -106,8 +98,7 @@ interface TemplateInterface
      * @return mixed Given a scalar, a scalar value is returned. Given an object, with the $recurse flag not
      *               allowing object recursion, returns a string. Otherwise, returns an array.
      */
-    public function escapeHtmlAttr(mixed $value, int $recurse = AbstractHelper::RECURSE_NONE): mixed;
-
+    public function escape_html_attr(mixed $value, int $recurse = Abstract_Helper::RECURSE_NONE): mixed;
     /**
      * @see AbstractHelper
      *
@@ -117,8 +108,7 @@ interface TemplateInterface
      * @return mixed Given a scalar, a scalar value is returned. Given an object, with the $recurse flag not
      *               allowing object recursion, returns a string. Otherwise, returns an array.
      */
-    public function escapeJs(mixed $value, int $recurse = AbstractHelper::RECURSE_NONE): mixed;
-
+    public function escape_js(mixed $value, int $recurse = Abstract_Helper::RECURSE_NONE): mixed;
     /**
      * @see AbstractHelper
      *
@@ -128,8 +118,7 @@ interface TemplateInterface
      * @return mixed Given a scalar, a scalar value is returned. Given an object, with the $recurse flag not
      *               allowing object recursion, returns a string. Otherwise, returns an array.
      */
-    public function escapeUrl(mixed $value, int $recurse = AbstractHelper::RECURSE_NONE): mixed;
-
+    public function escape_url(mixed $value, int $recurse = Abstract_Helper::RECURSE_NONE): mixed;
     /**
      * @see GravatarImage
      *
@@ -139,35 +128,21 @@ interface TemplateInterface
      * @param value-of<GravatarImage::DEFAULT_IMAGE_VALUES>|string $defaultImage
      * @param value-of<GravatarImage::RATINGS>                     $rating
      */
-    public function gravatarImage(
-        string $emailAddress,
-        int $imageSize = 80,
-        array $imageAttributes = [],
-        string $defaultImage = GravatarImage::DEFAULT_MP,
-        string $rating = GravatarImage::RATING_G
-    ): string;
-
+    public function gravatar_image(string $email_address, int $image_size = 80, array $image_attributes = [], string $default_image = Gravatar_Image::DEFAULT_MP, string $rating = Gravatar_Image::RATING_G): string;
     /**
      * @see HeadLink
      *
      * @param array<string, scalar>|null $attributes
      */
-    public function headLink(array|null $attributes = null): HeadLink;
-
+    public function head_link(array|null $attributes = null): Head_Link;
     /**
      * @see HeadMeta
      *
      * @param array<string, scalar> $attributes
      */
-    public function headMeta(
-        string|null $name = null,
-        string|null $content = null,
-        array $attributes = [],
-    ): HeadMeta;
-
+    public function head_meta(string|null $name = null, string|null $content = null, array $attributes = []): Head_Meta;
     /** @see HeadScript */
-    public function headScript(): HeadScript;
-
+    public function head_script(): Head_Script;
     /**
      * @see HeadStyle
      *
@@ -176,23 +151,16 @@ interface TemplateInterface
      * @param string|null $content CSS to add to a style element
      * @param array<string, scalar> $attributes to apply to the style element
      */
-    public function headStyle(
-        string|null $content = null,
-        array $attributes = [],
-        Position $position = Position::Append,
-    ): HeadStyle;
-
+    public function head_style(string|null $content = null, array $attributes = [], Position $position = Position::Append): Head_Style;
     /** @see HeadTitle */
-    public function headTitle(string|null $title = null): HeadTitle;
-
+    public function head_title(string|null $title = null): Head_Title;
     /**
      * Returns a new HtmlAttributesSet object, optionally initializing it with
      * the provided value.
      *
      * @param iterable<string, scalar|array|null> $attributes
      */
-    public function htmlAttributes(iterable $attributes = []): HtmlAttributesSet;
-
+    public function html_attributes(iterable $attributes = []): Html_Attributes_Set;
     /**
      * Generates a 'List' element.
      *
@@ -205,13 +173,7 @@ interface TemplateInterface
      * @throws Exception\InvalidArgumentException If $items is empty.
      * @return string The list XHTML.
      */
-    public function htmlList(
-        array $items,
-        bool $ordered = false,
-        array|null $attribs = null,
-        bool $escape = true,
-    ): string;
-
+    public function html_list(array $items, bool $ordered = false, array|null $attribs = null, bool $escape = true): string;
     /**
      * Output an 'object'
      *
@@ -223,24 +185,15 @@ interface TemplateInterface
      * @param array<string, scalar> $params Parameters for the resource
      * @param string|null $content Fallback content. This content is not escaped and is assumed to be markup.
      */
-    public function htmlObject(
-        string $data,
-        string $type,
-        array $attributes = [],
-        array $params = [],
-        string|null $content = null,
-    ): string;
-
+    public function html_object(string $data, string $type, array $attributes = [], array $params = [], string|null $content = null): string;
     /**
      * @see HtmlTag
      *
      * @param array<string, scalar> $attributes
      */
-    public function __invoke(array $attributes = []): HtmlTag;
-
+    public function __invoke(array $attributes = []): Html_Tag;
     /** @see InlineScript */
-    public function inlineScript(): InlineScript;
-
+    public function inline_script(): Inline_Script;
     /**
      * Set layout template or retrieve "layout" view model
      *
@@ -252,8 +205,7 @@ interface TemplateInterface
      * @param null|string $template Providing a template name will set that template as the current layout template
      * @return ($template is null ? ModelInterface : Layout)
      */
-    public function layout(string|null $template = null): ModelInterface|Layout;
-
+    public function layout(string|null $template = null): Model_Interface|Layout;
     /**
      * Renders a template fragment within a variable scope distinct from the
      * calling View object. It proxies to view's render function
@@ -265,11 +217,7 @@ interface TemplateInterface
      * @return ($name is null ? Partial : string)
      * @throws RuntimeException
      */
-    public function partial(
-        string|ModelInterface|null $name = null,
-        iterable|object|null $values = null,
-    ): string|Partial;
-
+    public function partial(string|Model_Interface|null $name = null, iterable|object|null $values = null): string|Partial;
     /**
      * Renders a template fragment within a variable scope distinct from the
      * calling View object.
@@ -283,11 +231,9 @@ interface TemplateInterface
      * @return ($name is string ? string : PartialLoop)
      * @throws Exception\InvalidArgumentException
      */
-    public function partialLoop(string|null $name = null, iterable|object $values = []): PartialLoop|string;
-
+    public function partial_loop(string|null $name = null, iterable|object $values = []): Partial_Loop|string;
     /** @see Placeholder */
     public function placeholder(string|null $placeholder = null): Placeholder;
-
     /**
      * Render the child model identified by $child
      *
@@ -297,11 +243,9 @@ interface TemplateInterface
      *
      * @param non-empty-string $child
      */
-    public function renderChildModel(string $child): string;
-
+    public function render_child_model(string $child): string;
     /** @see ViewModel */
-    public function viewModel(): ViewModel;
-
+    public function view_model(): View_Model;
     /** This method is here so that the custom template analyzer works */
-    public function __internalPseudoRenderForPsalm(): void;
+    public function __internal_pseudo_render_for_psalm(): void;
 }

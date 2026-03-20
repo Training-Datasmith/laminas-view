@@ -1,18 +1,14 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace Laminas\View\Factory;
 
 use function is_bool;
 use function is_iterable;
-
 use function is_string;
 use function iterator_to_array;
-
-use Laminas\View\ConfigProvider;
-use Psr\Container\ContainerInterface;
-
+use Laminas\View\Config_Provider;
+use Psr\Container\Container_Interface;
 /**
  * Provides consistent retrieval of configuration and individual values based on historic conventions
  *
@@ -24,22 +20,17 @@ use Psr\Container\ContainerInterface;
  */
 final readonly class Configuration
 {
-    private const DEFAULT_ENCODING         = 'utf-8';
-    private const DEFAULT_TEMPLATE_SUFFIX  = 'phtml';
+    private const DEFAULT_ENCODING = 'utf-8';
+    private const DEFAULT_TEMPLATE_SUFFIX = 'phtml';
     private const STRICT_VARIABLES_DEFAULT = true;
-    private const DEFAULT_LAYOUT_TEMPLATE  = 'layout::default';
-    private const DEFAULT_CAPTURE_TO       = 'content';
-
+    private const DEFAULT_LAYOUT_TEMPLATE = 'layout::default';
+    private const DEFAULT_CAPTURE_TO = 'content';
     /** @return array<array-key, mixed> */
-    public static function get(ContainerInterface $container): array
+    public static function get(Container_Interface $container): array
     {
-        $config = $container->has('config')
-            ? $container->get('config')
-            : [];
-
+        $config = $container->has('config') ? $container->get('config') : [];
         return is_iterable($config) ? iterator_to_array($config) : [];
     }
-
     /**
      * Fetch the encoding configuration variable
      *
@@ -49,80 +40,62 @@ final readonly class Configuration
      * @param non-empty-string $defaultEncoding
      * @return non-empty-string
      */
-    public static function viewEncoding(
-        ContainerInterface $container,
-        string $defaultEncoding = self::DEFAULT_ENCODING,
-    ): string {
+    public static function view_encoding(Container_Interface $container, string $default_encoding = self::DEFAULT_ENCODING): string
+    {
         /** @var ViewConfigShape $config */
-        $config   = self::get($container);
+        $config = self::get($container);
         $encoding = $config['view_manager']['encoding'] ?? '';
         $encoding = $config['view_helper_config']['encoding'] ?? $encoding;
-
-        return $encoding !== '' ? $encoding : $defaultEncoding;
+        return $encoding !== '' ? $encoding : $default_encoding;
     }
-
     /**
      * Retrieve the default template suffix from conventional locations
      *
      * @return non-empty-string
      */
-    public static function defaultTemplateSuffix(
-        ContainerInterface $container,
-    ): string {
+    public static function default_template_suffix(Container_Interface $container): string
+    {
         /** @var ViewConfigShape $config */
         $config = self::get($container);
         $suffix = $config['view_manager']['default_template_suffix'] ?? null;
         $suffix = $config['templates']['extension'] ?? $suffix;
-
         return is_string($suffix) ? $suffix : self::DEFAULT_TEMPLATE_SUFFIX;
     }
-
     /**
      * Return the strict_variables configuration option
      */
-    public static function strictVariables(
-        ContainerInterface $container,
-    ): bool {
+    public static function strict_variables(Container_Interface $container): bool
+    {
         /** @var ViewConfigShape $config */
         $config = self::get($container);
-
         $strict = $config['view_manager']['strict_variables'] ?? null;
         $strict = $config['templates']['strict_variables'] ?? $strict;
-
         return is_bool($strict) ? $strict : self::STRICT_VARIABLES_DEFAULT;
     }
-
     /**
      * Retrieve the name of the default layout template
      *
      * @return non-empty-string
      */
-    public static function defaultLayout(
-        ContainerInterface $container,
-    ): string {
+    public static function default_layout(Container_Interface $container): string
+    {
         /** @var ViewConfigShape $config */
         $config = self::get($container);
-
         $template = $config['view_manager']['default_layout'] ?? null;
         $template = $config['templates']['default_layout'] ?? $template;
-
         return is_string($template) ? $template : self::DEFAULT_LAYOUT_TEMPLATE;
     }
-
     /**
      * Retrieve the default variable name that "child" templates will be captured or rendered to
      *
      * @return non-empty-string
      */
-    public static function defaultCaptureTo(
-        ContainerInterface $container,
-    ): string {
+    public static function default_capture_to(Container_Interface $container): string
+    {
         /** @var ViewConfigShape $config */
         $config = self::get($container);
-
-        $captureTo = $config['view_manager']['default_capture_to'] ?? null;
-        $captureTo = $config['templates']['default_capture_to'] ?? $captureTo;
-
-        return is_string($captureTo) ? $captureTo : self::DEFAULT_CAPTURE_TO;
+        $capture_to = $config['view_manager']['default_capture_to'] ?? null;
+        $capture_to = $config['templates']['default_capture_to'] ?? $capture_to;
+        return is_string($capture_to) ? $capture_to : self::DEFAULT_CAPTURE_TO;
     }
 }

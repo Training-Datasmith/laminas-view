@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace Laminas\View\Model;
 
 /**
@@ -10,9 +9,8 @@ namespace Laminas\View\Model;
  * View models implementing this interface allow clearing children, options,
  * and variables.
  */
-interface ClearableModelInterface
+interface Clearable_Model_Interface
 {
-    public function clearChildren(): static;
-
-    public function clearVariables(): static;
+    public function clear_children(): static;
+    public function clear_variables(): static;
 }

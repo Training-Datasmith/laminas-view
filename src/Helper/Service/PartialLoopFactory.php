@@ -1,26 +1,23 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace Laminas\View\Helper\Service;
 
 use Laminas\View\Helper\Partial;
-use Laminas\View\Helper\PartialLoop;
-use Laminas\View\HelperPluginManager;
-use Psr\Container\ContainerInterface;
-
+use Laminas\View\Helper\Partial_Loop;
+use Laminas\View\Helper_Plugin_Manager;
+use Psr\Container\Container_Interface;
 /**
  * @internal
  *
  * @psalm-internal Laminas\View
  * @psalm-internal LaminasTest\View
  */
-final readonly class PartialLoopFactory
+final readonly class Partial_Loop_Factory
 {
-    public function __invoke(ContainerInterface $container): PartialLoop
+    public function __invoke(Container_Interface $container): Partial_Loop
     {
-        $helpers = $container->get(HelperPluginManager::class);
-
-        return new PartialLoop($helpers->get(Partial::class));
+        $helpers = $container->get(Helper_Plugin_Manager::class);
+        return new Partial_Loop($helpers->get(Partial::class));
     }
 }

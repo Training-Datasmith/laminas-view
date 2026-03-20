@@ -1,44 +1,34 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace Laminas\View\Helper\Escaper;
 
 use const E_USER_DEPRECATED;
-
 use function is_array;
-
 use function is_object;
 use function is_string;
-
-use Laminas\Escaper\EscaperInterface;
+use Laminas\Escaper\Escaper_Interface;
 use Laminas\View\Exception;
-
 use function method_exists;
-
 use function trigger_error;
-
 /**
  * @internal
  *
  * @psalm-internal Laminas\View
  * @psalm-internal LaminasTest\View
  */
-abstract readonly class AbstractHelper
+abstract readonly class Abstract_Helper
 {
-    public const RECURSE_NONE   = 0x00;
-    public const RECURSE_ARRAY  = 0x01;
-    public const RECURSE_OBJECT = 0x02;
-
-    public function __construct(protected EscaperInterface $escaper)
+    public const RECURSE_NONE = 0x0;
+    public const RECURSE_ARRAY = 0x1;
+    public const RECURSE_OBJECT = 0x2;
+    public function __construct(protected Escaper_Interface $escaper)
     {
     }
-
     /**
      * Escape a value for current escaping strategy
      */
     abstract protected function escape(string $value): string;
-
     /**
      * Invoke this helper: escape a value
      *
@@ -53,44 +43,30 @@ abstract readonly class AbstractHelper
         if (is_string($value)) {
             return $this->escape($value);
         }
-
         if (is_array($value)) {
-            if (! ($recurse & self::RECURSE_ARRAY)) {
-                throw new Exception\InvalidArgumentException(
-                    'Array provided to Escape helper, but flags do not allow recursion',
-                );
+            if (!($recurse & self::RECURSE_ARRAY)) {
+                throw new Exception\InvalidArgumentException('Array provided to Escape helper, but flags do not allow recursion');
             }
             /** @psalm-var mixed $v */
             foreach ($value as $k => $v) {
                 $value[$k] = $this->__invoke($v, $recurse);
             }
-
             return $value;
         }
-
         if (is_object($value)) {
-            if (! ($recurse & self::RECURSE_OBJECT)) {
+            if (!($recurse & self::RECURSE_OBJECT)) {
                 // Attempt to cast it to a string
                 if (method_exists($value, '__toString')) {
                     return $this->escape((string) $value);
                 }
-                throw new Exception\InvalidArgumentException(
-                    'Object provided to Escape helper, but flags do not allow recursion',
-                );
+                throw new Exception\InvalidArgumentException('Object provided to Escape helper, but flags do not allow recursion');
             }
-
             if (method_exists($value, 'toArray')) {
-                trigger_error(
-                    'Non-iterable objects implementing a `toArray` method will be rejected in version 4.0 '
-                    . 'of laminas-view ',
-                    E_USER_DEPRECATED,
-                );
-                return $this->__invoke($value->toArray(), $recurse | self::RECURSE_ARRAY);
+                trigger_error('Non-iterable objects implementing a `toArray` method will be rejected in version 4.0 ' . 'of laminas-view ', E_USER_DEPRECATED);
+                return $this->__invoke($value->to_array(), $recurse | self::RECURSE_ARRAY);
             }
-
             return $this->__invoke((array) $value, $recurse | self::RECURSE_ARRAY);
         }
-
         return $value;
     }
 }

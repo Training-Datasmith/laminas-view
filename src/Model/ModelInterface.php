@@ -1,12 +1,10 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 namespace Laminas\View\Model;
 
 use Countable;
 use IteratorAggregate;
-
 /**
  * Interface describing a view model.
  *
@@ -16,50 +14,44 @@ use IteratorAggregate;
  *
  * @extends IteratorAggregate<int, ModelInterface>
  */
-interface ModelInterface extends Countable, IteratorAggregate
+interface Model_Interface extends Countable, IteratorAggregate
 {
     /**
      * Get a single view variable
      *
      * @param non-empty-string $name
      */
-    public function getVariable(string $name, mixed $default = null): mixed;
-
+    public function get_variable(string $name, mixed $default = null): mixed;
     /**
      * Set view variable
      *
      * @param non-empty-string $name
      */
-    public function setVariable(string $name, mixed $value): static;
-
+    public function set_variable(string $name, mixed $value): static;
     /**
      * Set view variables en masse
      *
      * @param iterable<non-empty-string, mixed> $variables
      */
-    public function setVariables(iterable $variables, bool $overwrite = false): static;
-
+    public function set_variables(iterable $variables, bool $overwrite = false): static;
     /**
      * Get view variables
      *
      * @return array<non-empty-string, mixed>
      */
-    public function getVariables(): array;
-
+    public function get_variables(): array;
     /**
      * Set the template to be used by this model
      *
      * @param non-empty-string $template
      */
-    public function setTemplate(string $template): static;
-
+    public function set_template(string $template): static;
     /**
      * Get the template to be used by this model
      *
      * Implementations should return an empty string when the template has not been set
      */
-    public function getTemplate(): string;
-
+    public function get_template(): string;
     /**
      * Add a child model
      *
@@ -67,51 +59,43 @@ interface ModelInterface extends Countable, IteratorAggregate
      *                                         When null, the default 'capture to' value is used.
      * @param bool|null $append Optional; when true, the child model will be marked as an appending model.
      */
-    public function addChild(ModelInterface $child, string|null $captureTo = null, bool|null $append = null): static;
-
+    public function add_child(Model_Interface $child, string|null $capture_to = null, bool|null $append = null): static;
     /**
      * Return all children.
      *
      * @return list<ModelInterface>
      */
-    public function getChildren(): array;
-
+    public function get_children(): array;
     /**
      * Does the model have any children?
      */
-    public function hasChildren(): bool;
-
+    public function has_children(): bool;
     /**
      * Set the name of the variable to capture this model to, if it is a child model
      *
      * @param non-empty-string $capture
      */
-    public function setCaptureTo(string $capture): static;
-
+    public function set_capture_to(string $capture): static;
     /**
      * Get the name of the variable to which to capture this model
      *
      * @return non-empty-string
      */
-    public function captureTo(): string;
-
+    public function capture_to(): string;
     /**
      * Set flag indicating whether this is considered a terminal or standalone model
      */
-    public function setTerminal(bool $terminate): static;
-
+    public function set_terminal(bool $terminate): static;
     /**
      * Is this considered a terminal or standalone model?
      */
     public function terminate(): bool;
-
     /**
      * Set flag indicating whether to append to child with the same capture
      */
-    public function setAppend(bool $append): static;
-
+    public function set_append(bool $append): static;
     /**
      * Is this append to child  with the same capture?
      */
-    public function isAppend(): bool;
+    public function is_append(): bool;
 }
