@@ -67,7 +67,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "LaminasTest\\View\\": "test/"
+            "Laminas_Test\\View\\": "test/"
         }
     },
     "scripts": {
